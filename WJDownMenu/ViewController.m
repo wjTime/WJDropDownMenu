@@ -22,9 +22,9 @@
     // 平时工作需要有个下拉菜单所以简单的封装了一个菜单功能很简单也没有优化可为大家做一个参考,以下是demo
     
     //  创建标题菜单
-    NSArray *oneMenuTitleArray =   @[@"菜单A"];
-    NSArray *twoMenuTitleArray =   @[@"菜单A",@"菜单B"];
-    NSArray *threeMenuTitleArray = @[@"菜单A",@"菜单B",@"菜单C"];
+//    NSArray *oneMenuTitleArray =   @[@"菜单A"];
+//    NSArray *twoMenuTitleArray =   @[@"菜单A",@"菜单B"];
+//    NSArray *threeMenuTitleArray = @[@"菜单A",@"菜单B",@"菜单C"];
     NSArray *fourMenuTitleArray =  @[@"菜单A",@"菜单B",@"菜单C",@"菜单D"];
     
     
