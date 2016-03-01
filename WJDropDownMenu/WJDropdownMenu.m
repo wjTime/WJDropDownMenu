@@ -168,7 +168,7 @@
         [btn addTarget:self action:@selector(showFirstTableView:) forControlEvents:UIControlEventTouchUpInside];
         
         CGPoint bgLayerPoint = CGPointMake(window_w/num-10, menu_h/2);
-        CALayer *bgLayer = [self createBgLayerWithColor:[UIColor whiteColor] andPosition:bgLayerPoint];
+        CALayer *bgLayer = [self createBgLayerWithColor:[UIColor clearColor] andPosition:bgLayerPoint];
         CGPoint indicatorPoint = CGPointMake(10, 10);
         CAShapeLayer *indicator = [self createIndicatorWithColor:[UIColor lightGrayColor] andPosition:indicatorPoint];
         [bgLayer addSublayer:indicator];
