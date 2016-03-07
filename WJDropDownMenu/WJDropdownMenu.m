@@ -12,6 +12,9 @@
 #define menu_h   40
 #define window_h [UIScreen mainScreen].bounds.size.height
 #define carverAnimationDefalutTime 0.15
+#define menuTitleDefalutFont [UIFont systemFontOfSize:11]
+#define TableTitleDefalutFont [UIFont systemFontOfSize:10]
+
 
 #import "WJDropdownMenu.h"
 #import <UIKit/UIKit.h>
@@ -169,7 +172,8 @@
         
         btn.backgroundColor = [UIColor whiteColor];
         btn.tag = 100+i;
-        btn.titleLabel.font = [UIFont systemFontOfSize:12];
+        btn.titleLabel.font = self.menuTitleFont ? [UIFont systemFontOfSize:self.menuTitleFont] : menuTitleDefalutFont;
+        
         [btn setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
         [btn setTitle:data[i] forState:UIControlStateNormal];
         [btn addTarget:self action:@selector(showFirstTableView:) forControlEvents:UIControlEventTouchUpInside];
@@ -350,7 +354,7 @@
             cell1 = [[UITableViewCell alloc]initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:cellID];
         }
         cell1.textLabel.text = self.dataSourceFirst[indexPath.row];
-        cell1.textLabel.font = [UIFont systemFontOfSize:12];
+        cell1.textLabel.font = self.tableTitleFont ? [UIFont systemFontOfSize:self.tableTitleFont] : TableTitleDefalutFont;
         cell1.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
         return cell1;
         
@@ -361,7 +365,7 @@
             cell2 = [[UITableViewCell alloc]initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:cellIde];
         }
         cell2.textLabel.text = self.dataSourceSecond[indexPath.row];
-        cell2.textLabel.font = [UIFont systemFontOfSize:12];
+        cell2.textLabel.font = self.tableTitleFont ? [UIFont systemFontOfSize:self.tableTitleFont] : TableTitleDefalutFont;
         return cell2;
     }
 }

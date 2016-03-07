@@ -58,13 +58,12 @@
     NSArray *secondArrFour = @[@[@"D二级菜单11",@"D二级菜单12"],@[@"D二级菜单21",@"D二级菜单22"]];
     NSArray *fourMenu = [NSArray arrayWithObjects:firstArrFour,secondArrFour, nil];
     
-    //  size已固定可以随便填已固定
-    WJDropdownMenu *menu = [[WJDropdownMenu alloc]initWithFrame:CGRectMake(0, 64, 0, 0)];
     
-    //  增加了遮盖层动画时间设置 不设置默认是0.15
-    //menu.caverAnimationTime = 0.2;
-    
-    menu.delegate = self;
+    WJDropdownMenu *menu = [[WJDropdownMenu alloc]initWithFrame:CGRectMake(0, 64, 0, 0)];//  size已固定可以随便填已固定
+    menu.caverAnimationTime = 0.2;//  增加了遮盖层动画时间设置 不设置默认是 0.15
+    menu.menuTitleFont = 12;      //  设置menuTitle字体大小 默认不设置是  11
+    menu.tableTitleFont = 11;     //  设置tableTitle字体大小 默认不设置是 10
+    menu.delegate = self;         //  设置代理
     
     [self.view addSubview:menu];
     
