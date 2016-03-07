@@ -18,7 +18,7 @@
 
 
 @interface WJDropdownMenu : UIView<UITableViewDataSource,UITableViewDelegate,UIGestureRecognizerDelegate>
-
+@property (nonatomic,assign)CGFloat caverAnimationTime;
 @property (nonatomic,assign) id<WJMenuDelegate>delegate;
 
 - (void)createOneMenuTitleArray:(NSArray *)menuTitleArray FirstArray:(NSArray *)FirstArray;

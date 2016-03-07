@@ -11,6 +11,7 @@
 #define cell_h   30
 #define menu_h   40
 #define window_h [UIScreen mainScreen].bounds.size.height
+#define carverAnimationDefalutTime 0.15
 
 #import "WJDropdownMenu.h"
 #import <UIKit/UIKit.h>
@@ -19,7 +20,7 @@
 
 
 
-@interface WJDropdownMenu () 
+@interface WJDropdownMenu ()
 
 @property (nonatomic,strong) UIView         *backView;
 @property (nonatomic,strong) UITableView    *tableFirst;
@@ -44,7 +45,7 @@
 
 
 - (void)createOneMenuTitleArray:(NSArray *)menuTitleArray FirstArray:(NSArray *)FirstArray{
-
+    
     [self createMenuViewWithData:menuTitleArray];
     [self.allDataSource addObject:FirstArray];
     
@@ -52,7 +53,7 @@
     [self createTableViewSecond];
 }
 - (void)createTwoMenuTitleArray:(NSArray *)menuTitleArray FirstArr:(NSArray *)firstArr SecondArr:(NSArray *)secondArr{
- 
+    
     [self createMenuViewWithData:menuTitleArray];
     [self.allDataSource addObject:firstArr];
     [self.allDataSource addObject:secondArr];
@@ -62,7 +63,7 @@
 }
 
 - (void)createThreeMenuTitleArray:(NSArray *)menuTitleArray FirstArr:(NSArray *)firstArr SecondArr:(NSArray *)secondArr threeArr:(NSArray *)threeArr{
-
+    
     [self createMenuViewWithData:menuTitleArray];
     [self.allDataSource addObject:firstArr];
     [self.allDataSource addObject:secondArr];
@@ -88,7 +89,12 @@
     
     
     [self createWithFirstData:self.allDataSource[index][0]];
-    [self createWithSecondData:self.allDataSource[index][1]];
+    if ([self.allDataSource[index] count] <2) {
+        self.allData = nil;
+    }else{
+        [self createWithSecondData:self.allDataSource[index][1]];
+    }
+    
     
 }
 - (CAShapeLayer *)createIndicatorWithColor:(UIColor *)color andPosition:(CGPoint)point{
@@ -154,12 +160,12 @@
     self.backView.userInteractionEnabled = YES;
     
     self.backView.backgroundColor = [UIColor whiteColor];
-
+    
     [self addSubview:self.backView];
     NSInteger num = data.count;
     for (int i = 0; i < num; i++) {
         UIButton *btn = [[UIButton alloc]initWithFrame:CGRectMake(window_w/num*i, 0, window_w/num-1, menu_h)];
-
+        
         btn.backgroundColor = [UIColor whiteColor];
         btn.tag = 100+i;
         btn.titleLabel.font = [UIFont systemFontOfSize:12];
@@ -200,7 +206,7 @@
     [self changeMenuDataWithIndex:index-100];
     
     if (self.firstTableViewShow == NO) {
-
+        
         self.firstTableViewShow = YES;
         [self showCarverView];
         CALayer *layer = self.bgLayers[index-100];
@@ -211,7 +217,7 @@
         }];
         
     }else{
-
+        
         CALayer *layer = self.bgLayers[index-100];
         layer.transform = CATransform3DMakeRotation(M_PI*2, 0, 0, 1);
         self.firstTableViewShow = NO;
@@ -220,7 +226,7 @@
         }];
         self.secondTableViewShow = NO;
         [UIView animateWithDuration:0.2 animations:^{
-
+            
             self.tableSecond.frame = CGRectMake(window_w/2, CGRectGetMaxY(self.backView.frame), window_w/2, 0);
         }];
         [self hideCarverView];
@@ -229,16 +235,23 @@
     self.lastSelectedIndex = index;
 }
 - (void)showCarverView{
-
-    [UIView animateWithDuration:0.3 animations:^{
-        self.frame = CGRectMake(self.frame.origin.x, self.frame.origin.y, window_w, window_h-self.frame.origin.y);
+    if (!self.caverAnimationTime) {
+        self.caverAnimationTime = carverAnimationDefalutTime;
+    }
+    self.frame = CGRectMake(self.frame.origin.x, self.frame.origin.y, window_w, window_h-self.frame.origin.y);
+    [UIView animateWithDuration:self.caverAnimationTime animations:^{
+        
+        self.backgroundColor =[UIColor colorWithRed:0.5 green:0.5 blue:0.5 alpha:0.2];
         
     }];
 }
 - (void)hideCarverView{
-    
-    [UIView animateWithDuration:0.3 animations:^{
-        self.frame = CGRectMake(self.frame.origin.x, self.frame.origin.y, window_w, menu_h);
+    if (!self.caverAnimationTime) {
+        self.caverAnimationTime = carverAnimationDefalutTime;
+    }
+    self.frame = CGRectMake(self.frame.origin.x, self.frame.origin.y, window_w, menu_h);
+    [UIView animateWithDuration:self.caverAnimationTime animations:^{
+        self.backgroundColor =[UIColor colorWithRed:0.5 green:0.5 blue:0.5 alpha:0.0];
         
     }];
     
@@ -351,30 +364,42 @@
 }
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
     
+    __weak typeof(self)weakSelf = self;
+    
+    void (^complete)(void) = ^(void){
+        CALayer *layer = self.bgLayers[weakSelf.lastSelectedIndex-100];
+        layer.transform = CATransform3DMakeRotation(M_PI*2, 0, 0, 1);
+        UIButton *btn = (id)[self viewWithTag:weakSelf.lastSelectedIndex];
+        weakSelf.firstTableViewShow = NO;
+        [UIView animateWithDuration:0.2 animations:^{
+            weakSelf.tableFirst.frame = CGRectMake(0, CGRectGetMaxY(weakSelf.backView.frame), window_w/2, 0);
+        }];
+        weakSelf.secondTableViewShow = NO;
+        [UIView animateWithDuration:0.2 animations:^{
+            weakSelf.tableSecond.frame = CGRectMake(window_w/2,CGRectGetMaxY(self.backView.frame), window_w/2, 0);
+        }];
+        [weakSelf hideCarverView];
+        if (weakSelf.allData) {
+            [btn setTitle:weakSelf.dataSourceSecond[indexPath.row] forState:UIControlStateNormal];
+            [_delegate menuCellDidSelected:weakSelf.lastSelectedIndex-100 andDetailIndex:indexPath.row];
+        }else{
+            [btn setTitle:weakSelf.dataSourceFirst[indexPath.row] forState:UIControlStateNormal];
+            [_delegate menuCellDidSelected:indexPath.row andDetailIndex:0];
+        }
+        
+    };
     
     if (tableView == self.tableFirst) {
-        NSLog(@"tableview点击");
         NSInteger i = indexPath.row;
-        self.dataSourceSecond = self.allData[i];
-        [self.tableSecond reloadData];
-        [self showSecondTabelView:self.secondTableViewShow];
+        if (self.allData) {
+            self.dataSourceSecond = self.allData[i];
+            [self.tableSecond reloadData];
+            [self showSecondTabelView:self.secondTableViewShow];
+        }else{
+            complete();
+        }
     }else{
-        CALayer *layer = self.bgLayers[self.lastSelectedIndex-100];
-        layer.transform = CATransform3DMakeRotation(M_PI*2, 0, 0, 1);
-        
-        UIButton *btn = (id)[self viewWithTag:self.lastSelectedIndex];
-        [btn setTitle:self.dataSourceSecond[indexPath.row] forState:UIControlStateNormal];
-        self.firstTableViewShow = NO;
-        [UIView animateWithDuration:0.2 animations:^{
-            self.tableFirst.frame = CGRectMake(0, CGRectGetMaxY(self.backView.frame), window_w/2, 0);
-        }];
-        self.secondTableViewShow = NO;
-        [UIView animateWithDuration:0.2 animations:^{
-            self.tableSecond.frame = CGRectMake(window_w/2,CGRectGetMaxY(self.backView.frame), window_w/2, 0);
-        }];
-        [self hideCarverView];
-        [_delegate menuCellDidSelected:self.lastSelectedIndex-100 andDetailIndex:indexPath.row];
-        
+        complete();
     }
 }
 - (NSMutableArray *)allDataSource{
