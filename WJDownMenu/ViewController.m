@@ -19,8 +19,13 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    
+    self.title = @"WJDropdownMenu";
+    
     // 平时工作需要有个下拉菜单所以简单的封装了一个菜单功能很简单也没有优化可为大家做一个参考,以下是demo
     
+    // 如果是有导航栏请清除自动适应设置
+    self.automaticallyAdjustsScrollViewInsets = NO;
     
     NSArray *fourMenuTitleArray =  @[@"菜单A",@"菜单B",@"菜单C",@"菜单D"];
     
@@ -54,7 +59,7 @@
     NSArray *fourMenu = [NSArray arrayWithObjects:firstArrFour,secondArrFour, nil];
     
     //  size已固定可以随便填已固定
-    WJDropdownMenu *menu = [[WJDropdownMenu alloc]initWithFrame:CGRectMake(0, 100, 0, 0)];
+    WJDropdownMenu *menu = [[WJDropdownMenu alloc]initWithFrame:CGRectMake(0, 64, 0, 0)];
     
     //  增加了遮盖层动画时间设置 不设置默认是0.15
     //menu.caverAnimationTime = 0.2;

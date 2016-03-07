@@ -156,6 +156,7 @@
     self.bgLayers = [[NSMutableArray alloc]init];
     
     self.backView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, window_w, menu_h)];
+ 
     
     self.backView.userInteractionEnabled = YES;
     
@@ -318,6 +319,7 @@
     self.tableFirst.scrollEnabled = NO;
     self.tableFirst.delegate = self;
     self.tableFirst.dataSource = self;
+    
     [self insertSubview:self.tableFirst belowSubview:self.backView];
     
 }
@@ -326,6 +328,7 @@
     self.tableSecond.scrollEnabled = NO;
     self.tableSecond.delegate = self;
     self.tableSecond.dataSource = self;
+    self.tableSecond.autoresizesSubviews = NO;
     [self insertSubview:self.tableSecond belowSubview:self.backView];
 }
 
