@@ -80,11 +80,11 @@
     [menu createFourMenuTitleArray:fourMenuTitleArray FirstArr:firstMenu SecondArr:secondMenu threeArr:threeMenu fourArr:fourMenu];
     
 }
-- (void)menuCellDidSelected:(NSInteger)MenuIndex andDetailIndex:(NSInteger)DetailIndex{
-    NSLog(@"菜单数:%ld 子菜单数:%ld",MenuIndex,DetailIndex);
+- (void)menuCellDidSelected:(NSInteger)MenuTitleIndex firstIndex:(NSInteger)firstIndex andSecondIndex:(NSInteger)secondIndex{
+      NSLog(@"菜单数:%ld          一级菜单数:%ld      二级子菜单数:%ld",MenuTitleIndex,firstIndex,secondIndex);
 }
 - (void)menuCellDidSelected:(NSString *)MenuTitle firstContent:(NSString *)firstContent andSecondContent:(NSString *)secondContent{
-      NSLog(@"菜单title:%@ ,一级菜单:%@ ,二级子菜单:%@",MenuTitle,firstContent,secondContent);
+      NSLog(@"菜单title:%@       一级菜单:%@         二级子菜单:%@",MenuTitle,firstContent,secondContent);
 }
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
