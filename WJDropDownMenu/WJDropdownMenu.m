@@ -35,6 +35,7 @@
 @property (nonatomic,assign) BOOL           firstTableViewShow;
 @property (nonatomic,assign) BOOL           secondTableViewShow;
 @property (nonatomic,assign) NSInteger      lastSelectedIndex;
+@property (nonatomic,assign) NSInteger      lastSelectedCellIndex;
 @property (nonatomic,strong) NSMutableArray *bgLayers;
 
 
@@ -371,8 +372,8 @@
 }
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
     
+    self.lastSelectedCellIndex = indexPath.row;
     __weak typeof(self)weakSelf = self;
-    
     void (^complete)(void) = ^(void){
         CALayer *layer = self.bgLayers[weakSelf.lastSelectedIndex-100];
         layer.transform = CATransform3DMakeRotation(M_PI*2, 0, 0, 1);
@@ -388,10 +389,23 @@
         [weakSelf hideCarverView];
         if (weakSelf.allData) {
             [btn setTitle:weakSelf.dataSourceSecond[indexPath.row] forState:UIControlStateNormal];
-            [_delegate menuCellDidSelected:weakSelf.lastSelectedIndex-100 andDetailIndex:indexPath.row];
+            if (_delegate && [_delegate respondsToSelector:@selector(menuCellDidSelected:andDetailIndex:)]) {
+                [_delegate menuCellDidSelected:weakSelf.lastSelectedIndex-100 andDetailIndex:indexPath.row];
+            }
+            if (_delegate && [_delegate respondsToSelector:@selector(menuCellDidSelected:firstContent:andSecondContent:)]) {
+                [_delegate menuCellDidSelected:weakSelf.dataSourceSecond[indexPath.row]
+                                  firstContent:weakSelf.dataSourceFirst[self.lastSelectedCellIndex]
+                              andSecondContent:self.dataSourceSecond[indexPath.row]];
+            }
+            
         }else{
             [btn setTitle:weakSelf.dataSourceFirst[indexPath.row] forState:UIControlStateNormal];
-            [_delegate menuCellDidSelected:indexPath.row andDetailIndex:0];
+            if (_delegate && [_delegate respondsToSelector:@selector(menuCellDidSelected:andDetailIndex:)]) {
+                [_delegate menuCellDidSelected:indexPath.row andDetailIndex:0];
+            }
+            if (_delegate && [_delegate respondsToSelector:@selector(menuCellDidSelected:firstContent:andSecondContent:)]) {
+                [_delegate menuCellDidSelected:weakSelf.dataSourceFirst[indexPath.row] firstContent:weakSelf.dataSourceFirst[indexPath.row] andSecondContent:nil];
+            }
         }
         
     };
@@ -400,6 +414,7 @@
         NSInteger i = indexPath.row;
         if (self.allData) {
             self.dataSourceSecond = self.allData[i];
+            NSLog(@"click tablefirst : %@",self.allData[i]);
             [self.tableSecond reloadData];
             [self showSecondTabelView:self.secondTableViewShow];
         }else{
@@ -408,6 +423,7 @@
     }else{
         complete();
     }
+    
 }
 - (NSMutableArray *)allDataSource{
     if (_allDataSource == nil) {

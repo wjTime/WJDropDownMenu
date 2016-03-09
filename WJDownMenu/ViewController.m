@@ -83,6 +83,9 @@
 - (void)menuCellDidSelected:(NSInteger)MenuIndex andDetailIndex:(NSInteger)DetailIndex{
     NSLog(@"菜单数:%ld 子菜单数:%ld",MenuIndex,DetailIndex);
 }
+- (void)menuCellDidSelected:(NSString *)MenuTitle firstContent:(NSString *)firstContent andSecondContent:(NSString *)secondContent{
+      NSLog(@"菜单title:%@ ,一级菜单:%@ ,二级子菜单:%@",MenuTitle,firstContent,secondContent);
+}
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
