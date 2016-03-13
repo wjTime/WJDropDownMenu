@@ -26,9 +26,31 @@
 
 @interface WJDropdownMenu : UIView<UITableViewDataSource,UITableViewDelegate,UIGestureRecognizerDelegate>
 
+/**
+ * 关闭遮盖功能
+ */
+@property (nonatomic,strong)UIColor *CarverViewColor;
+
+/**
+ * 遮盖的动画时间
+ */
 @property (nonatomic,assign)CGFloat caverAnimationTime;
+
+/**
+ * 菜单title的字体大小
+ */
 @property (nonatomic,assign)CGFloat menuTitleFont;
+
+/**
+ * 下拉菜单的的字体大小
+ */
 @property (nonatomic,assign)CGFloat tableTitleFont;
+
+/**
+ * 下拉菜单的的字体大小
+ */
+@property (nonatomic,assign)CGFloat menuHeight;
+
 
 @property (nonatomic,assign) id<WJMenuDelegate>delegate;
 
