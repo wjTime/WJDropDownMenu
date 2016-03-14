@@ -46,13 +46,13 @@
     
     // 创建menu
     WJDropdownMenu *menu = [[WJDropdownMenu alloc]initWithFrame:CGRectMake(0, 64, self.view.frame.size.width, 40)];
+    menu.delegate = self;         //  设置代理
     [self.view addSubview:menu];
     
     // 设置属性(可不设置)
     menu.caverAnimationTime = 0.2;//  增加了遮盖层动画时间设置 不设置默认是 0.15
     menu.menuTitleFont = 12;      //  设置menuTitle字体大小 默认不设置是  11
     menu.tableTitleFont = 11;     //  设置tableTitle字体大小 默认不设置是 10
-    menu.delegate = self;         //  设置代理
     menu.CarverViewColor = [UIColor colorWithRed:0.5 green:0.5 blue:0.5 alpha:0.5];//设置遮罩层颜色
     
     // 三组菜单调用方法
