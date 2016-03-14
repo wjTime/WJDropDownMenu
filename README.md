@@ -37,8 +37,7 @@ fast dropdwon menu
     
     // 代理方法返回点击时对应的index
     //- (void)menuCellDidSelected:(NSInteger)MenuTitleIndex firstIndex:(NSInteger)firstIndex andSecondIndex:(NSInteger)secondIndex{}
-
-   //  代理方法返回点击时对应的内容
+    //  代理方法返回点击时对应的内容
    //- (void)menuCellDidSelected:(NSString *)MenuTitle firstContent:(NSString *)firstContent andSecondContent:(NSString *)secondContent{}
     
 
