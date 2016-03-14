@@ -35,20 +35,11 @@ fast dropdwon menu
     // 三组菜单调用方法
     [menu createThreeMenuTitleArray:threeMenuTitleArray FirstArr:firstMenu SecondArr:secondMenu threeArr:threeMenu];
     
-    
-}
     // 代理方法返回点击时对应的index
-- (void)menuCellDidSelected:(NSInteger)MenuTitleIndex firstIndex:(NSInteger)firstIndex andSecondIndex:(NSInteger)secondIndex{
-
-    NSLog(@"菜单数:%ld     一级菜单数:%ld      二级子菜单数:%ld",MenuTitleIndex,firstIndex,secondIndex);
-    
-}
+    //- (void)menuCellDidSelected:(NSInteger)MenuTitleIndex firstIndex:(NSInteger)firstIndex andSecondIndex:(NSInteger)secondIndex{}
 
    //  代理方法返回点击时对应的内容
-- (void)menuCellDidSelected:(NSString *)MenuTitle firstContent:(NSString *)firstContent andSecondContent:(NSString *)secondContent{
-
-    NSLog(@"菜单title:%@   一级菜单:%@         二级子菜单:%@",MenuTitle,firstContent,secondContent);
-  
-}
+   //- (void)menuCellDidSelected:(NSString *)MenuTitle firstContent:(NSString *)firstContent andSecondContent:(NSString *)secondContent{}
+    
 
 
