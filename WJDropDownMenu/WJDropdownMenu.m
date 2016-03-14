@@ -38,6 +38,7 @@
 @property (nonatomic,assign) NSInteger      lastSelectedCellIndex;
 @property (nonatomic,strong) NSMutableArray *bgLayers;
 @property (nonatomic,assign) CGFloat tableViewWith;
+@property (nonatomic,assign) CGFloat menuBaseHeight;
 
 
 @end
@@ -49,7 +50,7 @@
 
 
 - (void)createOneMenuTitleArray:(NSArray *)menuTitleArray FirstArray:(NSArray *)FirstArray{
-    
+    self.menuBaseHeight = self.frame.size.height;
     [self createMenuViewWithData:menuTitleArray];
     [self.allDataSource addObject:FirstArray];
     
@@ -57,7 +58,7 @@
     [self createTableViewSecond];
 }
 - (void)createTwoMenuTitleArray:(NSArray *)menuTitleArray FirstArr:(NSArray *)firstArr SecondArr:(NSArray *)secondArr{
-    
+    self.menuBaseHeight = self.frame.size.height;
     [self createMenuViewWithData:menuTitleArray];
     [self.allDataSource addObject:firstArr];
     [self.allDataSource addObject:secondArr];
@@ -67,7 +68,7 @@
 }
 
 - (void)createThreeMenuTitleArray:(NSArray *)menuTitleArray FirstArr:(NSArray *)firstArr SecondArr:(NSArray *)secondArr threeArr:(NSArray *)threeArr{
-    
+    self.menuBaseHeight = self.frame.size.height;
     [self createMenuViewWithData:menuTitleArray];
     [self.allDataSource addObject:firstArr];
     [self.allDataSource addObject:secondArr];
@@ -78,7 +79,7 @@
 }
 
 - (void)createFourMenuTitleArray:(NSArray *)menuTitleArray FirstArr:(NSArray *)firstArr SecondArr:(NSArray *)secondArr threeArr:(NSArray *)threeArr fourArr:(NSArray *)fourArr{
-    
+    self.menuBaseHeight = self.frame.size.height;
     [self createMenuViewWithData:menuTitleArray];
     [self.allDataSource addObject:firstArr];
     [self.allDataSource addObject:secondArr];
@@ -157,13 +158,13 @@
     self.lastSelectedIndex = -1;
     self.backgroundColor = self.CarverViewColor ? self.CarverViewColor : [UIColor colorWithRed:0.5 green:0.5 blue:0.5 alpha:0.2];
     self.frame = CGRectMake(self.frame.origin.x, self.frame.origin.y, self.frame.size.width
-, self.frame.size.height);
+, self.menuBaseHeight);
     UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(remover)];
     [self addGestureRecognizer:tap];
     tap.delegate = self;
     self.bgLayers = [[NSMutableArray alloc]init];
     self.backView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, self.frame.size.width
-, self.frame.size.height)];
+, self.menuBaseHeight)];
     self.backView.userInteractionEnabled = YES;
     self.backView.backgroundColor = [UIColor whiteColor];
     [self addSubview:self.backView];
@@ -171,7 +172,7 @@
     CGFloat btnW = (self.frame.size.width
 -num+1)/num;
     for (int i = 0; i < num; i++) {
-        UIButton *btn = [[UIButton alloc]initWithFrame:CGRectMake((btnW+1)*i, 0, btnW, self.frame.size.height)];
+        UIButton *btn = [[UIButton alloc]initWithFrame:CGRectMake((btnW+1)*i, 0, btnW, self.menuBaseHeight)];
         btn.backgroundColor = [UIColor whiteColor];
         btn.tag = 100+i;
         btn.titleLabel.font = self.menuTitleFont ? [UIFont systemFontOfSize:self.menuTitleFont] : menuTitleDefalutFont;
@@ -179,7 +180,7 @@
         [btn setTitle:data[i] forState:UIControlStateNormal];
         [btn addTarget:self action:@selector(showFirstTableView:) forControlEvents:UIControlEventTouchUpInside];
         CGPoint bgLayerPoint = CGPointMake(self.frame.size.width
-/num-10, self.frame.size.height/2);
+/num-10, self.menuBaseHeight/2);
         CALayer *bgLayer = [self createBgLayerWithColor:[UIColor clearColor] andPosition:bgLayerPoint];
         CGPoint indicatorPoint = CGPointMake(10, 10);
         CAShapeLayer *indicator = [self createIndicatorWithColor:[UIColor lightGrayColor] andPosition:indicatorPoint];
@@ -190,7 +191,7 @@
     }
     
     for (int i = 0; i < num; i++) {
-        UILabel *lineLb = [[UILabel alloc]initWithFrame:CGRectMake((btnW+1)*i+btnW, self.frame.size.height/10, 1, self.frame.size.height/10*8)];
+        UILabel *lineLb = [[UILabel alloc]initWithFrame:CGRectMake((btnW+1)*i+btnW, self.menuBaseHeight/10, 1, self.menuBaseHeight/10*8)];
         lineLb.backgroundColor = [UIColor lightGrayColor];
         if (i == num - 1) {
             lineLb.hidden = YES;
@@ -203,7 +204,7 @@
     UILabel *VlineLbTop = [[UILabel alloc]initWithFrame:CGRectMake(0, 0, self.backView.frame.size.width, 1)];
     VlineLbTop.backgroundColor = [UIColor lightGrayColor];
     
-    UILabel *VlineLbBom = [[UILabel alloc]initWithFrame:CGRectMake(0, self.frame.size.height, self.backView.frame.size.width, 1)];
+    UILabel *VlineLbBom = [[UILabel alloc]initWithFrame:CGRectMake(0, self.menuBaseHeight, self.backView.frame.size.width, 1)];
     VlineLbBom.backgroundColor = [UIColor lightGrayColor];
     
     [self.backView addSubview:VlineLbTop];
@@ -259,7 +260,7 @@
     self.frame = CGRectMake(self.frame.origin.x, self.frame.origin.y, self.frame.size.width
 , window_h-self.frame.origin.y);
     [UIView animateWithDuration:self.caverAnimationTime animations:^{
-        self.backgroundColor = self.CarverViewColor ? self.CarverViewColor : [UIColor colorWithRed:0.5 green:0.5 blue:0.5 alpha:0.2];
+        self.backgroundColor = self.CarverViewColor ? self.CarverViewColor : [UIColor colorWithRed:0.5 green:0.5 blue:0.5 alpha:0.5];
         
         
     }];
@@ -272,10 +273,9 @@
         self.caverAnimationTime = carverAnimationDefalutTime;
     }
     self.frame = CGRectMake(self.frame.origin.x, self.frame.origin.y, self.frame.size.width
-, self.frame.size.height);
+, self.menuBaseHeight);
     [UIView animateWithDuration:self.caverAnimationTime animations:^{
-        self.backgroundColor =self.CarverViewColor ? self.CarverViewColor : [UIColor colorWithRed:0.5 green:0.5 blue:0.5 alpha:0.2];
-        
+        self.backgroundColor = self.CarverViewColor ? self.CarverViewColor : [UIColor colorWithRed:0.5 green:0.5 blue:0.5 alpha:0.5];
     }];
     
 }
