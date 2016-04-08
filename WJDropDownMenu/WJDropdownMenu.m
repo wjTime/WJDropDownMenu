@@ -409,7 +409,8 @@
 }
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
     
-    self.lastSelectedCellIndex = indexPath.row;
+    
+   
     __weak typeof(self)weakSelf = self;
     void (^complete)(void) = ^(void){
         CALayer *layer = self.bgLayers[weakSelf.lastSelectedIndex-100];
@@ -432,7 +433,9 @@
         if (weakSelf.allData) {
             [btn setTitle:weakSelf.dataSourceSecond[indexPath.row] forState:UIControlStateNormal];
             if (_delegate && [_delegate respondsToSelector:@selector(menuCellDidSelected:firstIndex:andSecondIndex:)]) {
+                
                 [_delegate menuCellDidSelected:weakSelf.lastSelectedIndex-100 firstIndex:weakSelf.lastSelectedCellIndex andSecondIndex:indexPath.row];
+                NSLog(@"  222  lastSelectedCellIndex======%ld",weakSelf.lastSelectedCellIndex);
             }
             if (_delegate && [_delegate respondsToSelector:@selector(menuCellDidSelected:firstContent:andSecondContent:)]) {
                 [_delegate menuCellDidSelected:weakSelf.dataSourceSecond[indexPath.row]
@@ -441,6 +444,7 @@
             }
             
         }else{
+            
             [btn setTitle:weakSelf.dataSourceFirst[indexPath.row] forState:UIControlStateNormal];
             if (_delegate && [_delegate respondsToSelector:@selector(menuCellDidSelected:firstIndex:andSecondIndex:)]) {
                 [_delegate menuCellDidSelected:weakSelf.lastSelectedIndex-100 firstIndex:indexPath.row andSecondIndex:0];
@@ -454,6 +458,8 @@
     
     if (tableView == self.tableFirst) {
         NSInteger i = indexPath.row;
+        self.lastSelectedCellIndex = indexPath.row;
+        NSLog(@" 111 click ==  cell index === %ld    === %ld",self.lastSelectedCellIndex,indexPath.row);
         if (self.allData) {
             self.dataSourceSecond = self.allData[i];
             [self.tableSecond reloadData];

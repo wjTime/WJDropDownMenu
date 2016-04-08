@@ -41,7 +41,7 @@
     
     //  创建第三个菜单的first数据second数据
     NSArray *firstArrThree = [NSArray arrayWithObjects:@"C一级菜单1",@"C一级菜单2", nil];
-    NSArray *secondArrThree = @[@[@"C二级菜单11",@"C二级菜单12"],@[@"C二级菜单21",@"C二级菜单22"]];
+    NSArray *secondArrThree = @[@[@"C二级菜单11",@"C二级菜单12"],@[@"C二级菜单21",@"C二级菜单22",@"C二级菜单23",@"C二级菜单24"]];
     NSArray *threeMenu = [NSArray arrayWithObjects:firstArrThree,secondArrThree, nil];
     
     // 创建menu
