@@ -22,10 +22,8 @@
     
     self.title = @"WJDropdownMenu";
     
-
     //  平时工作需要有个下拉菜单，所以简单的封装了一个菜单功能，不需要遵循类似tableView的代理方法，直接导入数据就可以用，大家可以做一个参考使用,以下是demo
 
-    
     //  如果是有导航栏请清除自动适应设置
     self.automaticallyAdjustsScrollViewInsets = NO;
     NSArray *threeMenuTitleArray =  @[@"菜单A",@"菜单B",@"菜单C"];
@@ -50,12 +48,14 @@
     [self.view addSubview:menu];
     
     // 设置属性(可不设置)
-    menu.caverAnimationTime = 0.2;//  增加了遮盖层动画时间设置 不设置默认是 0.15
-    menu.menuTitleFont = 12;      //  设置menuTitle字体大小 默认不设置是  11
-    menu.tableTitleFont = 11;     //  设置tableTitle字体大小 默认不设置是 10
+    menu.caverAnimationTime = 0.2;//  增加了遮盖层动画时间设置   不设置默认是  0.15
+    menu.menuTitleFont = 12;      //  设置menuTitle字体大小    不设置默认是  11
+    menu.tableTitleFont = 11;     //  设置tableTitle字体大小   不设置默认是  10
+    menu.cellHeight = 50;         //  设置tableViewcell高度   不设置默认是   30
+    menu.menuArrowStyle = menuArrowStyleHollow;
     menu.CarverViewColor = [UIColor colorWithRed:0.5 green:0.5 blue:0.5 alpha:0.5];//设置遮罩层颜色
     
-    // 三组菜单调用方法
+    // 三组菜单的数据导入方法
     [menu createThreeMenuTitleArray:threeMenuTitleArray FirstArr:firstMenu SecondArr:secondMenu threeArr:threeMenu];
     
     

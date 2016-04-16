@@ -107,14 +107,32 @@
 - (CAShapeLayer *)createIndicatorWithColor:(UIColor *)color andPosition:(CGPoint)point{
     CAShapeLayer *layer = [CAShapeLayer new];
     UIBezierPath *path = [UIBezierPath new];
-    [path moveToPoint:CGPointMake(0, 0)];
-    [path addLineToPoint:CGPointMake(8, 0)];
-    [path addLineToPoint:CGPointMake(4, 5)];
-    [path closePath];
     
+    if (self.menuArrowStyle == menuArrowStyleSolid) {
+        [path moveToPoint:CGPointMake(0, 0)];
+        [path addLineToPoint:CGPointMake(8, 0)];
+        [path addLineToPoint:CGPointMake(4, 5)];
+
+    }else{
+        [path moveToPoint:CGPointMake(0, 0)];
+        [path addLineToPoint:CGPointMake(5, 5)];
+        [path moveToPoint:CGPointMake(5, 5)];
+        [path addLineToPoint:CGPointMake(10, 0)];
+    }
+    
+    
+    [path closePath];
     layer.path = path.CGPath;
+    
     layer.lineWidth = 0.8;
-    layer.fillColor = [UIColor colorWithRed:0xcc/255.0 green:0xcc/255.0 blue:0xcc/255.0 alpha:0xcc/255.0].CGColor;
+    if (self.menuArrowStyle == menuArrowStyleSolid) {
+        layer.fillColor = [UIColor colorWithRed:0xcc/255.0 green:0xcc/255.0 blue:0xcc/255.0 alpha:0xcc/255.0].CGColor;
+    }else{
+        layer.strokeColor = [UIColor colorWithRed:0xcc/255.0 green:0xcc/255.0 blue:0xcc/255.0 alpha:0xcc/255.0].CGColor;
+        layer.fillColor = [UIColor colorWithRed:255/255.0 green:255/255.0 blue:255/255.0 alpha:255/255.0].CGColor;
+    }
+
+    
     CGPathRef bound = CGPathCreateCopyByStrokingPath(layer.path, nil, layer.lineWidth, kCGLineCapButt, kCGLineJoinMiter, layer.miterLimit);
     layer.bounds = CGPathGetBoundingBox(bound);
     CGPathRelease(bound);
@@ -154,7 +172,7 @@
     
 }
 - (void)createMenuViewWithData:(NSArray *)data{
-    
+    self.cellHeight = self.cellHeight ? self.cellHeight : cell_h;
     self.lastSelectedIndex = -1;
     self.backgroundColor = self.CarverViewColor ? self.CarverViewColor : [UIColor colorWithRed:0.5 green:0.5 blue:0.5 alpha:0.2];
     self.frame = CGRectMake(self.frame.origin.x, self.frame.origin.y, self.frame.size.width
@@ -225,7 +243,7 @@
         layer.transform = CATransform3DMakeRotation(M_PI, 0, 0, 1);
         self.tableFirst.frame = CGRectMake(0, CGRectGetMaxY(self.backView.frame), self.tableViewWith, 0);
         [UIView animateWithDuration:0.2 animations:^{
-            self.tableFirst.frame = CGRectMake(0, CGRectGetMaxY(self.backView.frame), self.tableViewWith, cell_h*self.dataSourceFirst.count);
+            self.tableFirst.frame = CGRectMake(0, CGRectGetMaxY(self.backView.frame), self.tableViewWith, self.cellHeight*self.dataSourceFirst.count);
         }];
         
     }else{
@@ -233,7 +251,7 @@
         CALayer *layer = self.bgLayers[index-100];
         layer.transform = CATransform3DMakeRotation(M_PI*2, 0, 0, 1);
         self.firstTableViewShow = NO;
-        self.tableFirst.frame = CGRectMake(0, CGRectGetMaxY(self.backView.frame), self.tableViewWith, cell_h*self.dataSourceFirst.count);
+        self.tableFirst.frame = CGRectMake(0, CGRectGetMaxY(self.backView.frame), self.tableViewWith, self.cellHeight*self.dataSourceFirst.count);
         [UIView animateWithDuration:0.2 animations:^{
             self.tableFirst.frame = CGRectMake(0, CGRectGetMaxY(self.backView.frame), self.tableViewWith, 0);
         }];
@@ -315,7 +333,7 @@
         [UIView animateWithDuration:0.2 animations:^{
             self.tableSecond.frame = CGRectMake(self.frame.size.width
 /2, CGRectGetMaxY(self.backView.frame), self.frame.size.width
-/2, cell_h*self.dataSourceSecond.count);
+/2, self.cellHeight*self.dataSourceSecond.count);
         }];
     }else{
         
@@ -328,7 +346,7 @@
         [UIView animateWithDuration:0.2 animations:^{
             self.tableSecond.frame = CGRectMake(self.frame.size.width
 /2, CGRectGetMaxY(self.backView.frame), self.frame.size.width
-/2, cell_h*self.dataSourceSecond.count);
+/2, self.cellHeight*self.dataSourceSecond.count);
         }];
     }
     
@@ -367,7 +385,7 @@
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
-    return 30;
+    return self.cellHeight;
 }
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
     if (tableView == self.tableFirst) {
@@ -435,7 +453,7 @@
             if (_delegate && [_delegate respondsToSelector:@selector(menuCellDidSelected:firstIndex:andSecondIndex:)]) {
                 
                 [_delegate menuCellDidSelected:weakSelf.lastSelectedIndex-100 firstIndex:weakSelf.lastSelectedCellIndex andSecondIndex:indexPath.row];
-                NSLog(@"  222  lastSelectedCellIndex======%ld",weakSelf.lastSelectedCellIndex);
+          
             }
             if (_delegate && [_delegate respondsToSelector:@selector(menuCellDidSelected:firstContent:andSecondContent:)]) {
                 [_delegate menuCellDidSelected:weakSelf.dataSourceSecond[indexPath.row]
@@ -459,7 +477,6 @@
     if (tableView == self.tableFirst) {
         NSInteger i = indexPath.row;
         self.lastSelectedCellIndex = indexPath.row;
-        NSLog(@" 111 click ==  cell index === %ld    === %ld",self.lastSelectedCellIndex,indexPath.row);
         if (self.allData) {
             self.dataSourceSecond = self.allData[i];
             [self.tableSecond reloadData];
