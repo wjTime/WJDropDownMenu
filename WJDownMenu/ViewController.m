@@ -52,7 +52,7 @@
     menu.menuTitleFont = 12;      //  设置menuTitle字体大小    不设置默认是  11
     menu.tableTitleFont = 11;     //  设置tableTitle字体大小   不设置默认是  10
     menu.cellHeight = 50;         //  设置tableViewcell高度   不设置默认是   30
-    menu.menuArrowStyle = menuArrowStyleHollow;
+    menu.menuArrowStyle = menuArrowStyleHollow; // 设置菜单旋转箭头的样式 实心三角形 或 空心箭头
     menu.CarverViewColor = [UIColor colorWithRed:0.5 green:0.5 blue:0.5 alpha:0.5];//设置遮罩层颜色
     
     // 三组菜单的数据导入方法
