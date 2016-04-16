@@ -1,7 +1,7 @@
 # WJDropDownMenu
 fast dropdwon menu
 
-    //  不需要遵循类似tableView的代理方法，直接导入数据就可以用，大家可以做一个参考使用
+    //  平时工作需要有个下拉菜单，所以简单的封装了一个菜单功能，不需要遵循类似tableView的代理方法，直接导入数据就可以用，大家可以做一个参考使用,以下是demo
 
     //  如果是有导航栏请清除自动适应设置
     self.automaticallyAdjustsScrollViewInsets = NO;
@@ -18,7 +18,7 @@ fast dropdwon menu
     
     //  创建第三个菜单的first数据second数据
     NSArray *firstArrThree = [NSArray arrayWithObjects:@"C一级菜单1",@"C一级菜单2", nil];
-    NSArray *secondArrThree = @[@[@"C二级菜单11",@"C二级菜单12"],@[@"C二级菜单21",@"C二级菜单22"]];
+    NSArray *secondArrThree = @[@[@"C二级菜单11",@"C二级菜单12"],@[@"C二级菜单21",@"C二级菜单22",@"C二级菜单23",@"C二级菜单24"]];
     NSArray *threeMenu = [NSArray arrayWithObjects:firstArrThree,secondArrThree, nil];
     
     // 创建menu
@@ -27,10 +27,15 @@ fast dropdwon menu
     [self.view addSubview:menu];
     
     // 设置属性(可不设置)
-    menu.caverAnimationTime = 0.2;//  增加了遮盖层动画时间设置 不设置默认是 0.15
-    menu.menuTitleFont = 12;      //  设置menuTitle字体大小 默认不设置是  11
-    menu.tableTitleFont = 11;     //  设置tableTitle字体大小 默认不设置是 10
+    menu.caverAnimationTime = 0.2;//  增加了遮盖层动画时间设置   不设置默认是  0.15
+    menu.menuTitleFont = 12;      //  设置menuTitle字体大小    不设置默认是  11
+    menu.tableTitleFont = 11;     //  设置tableTitle字体大小   不设置默认是  10
+    menu.cellHeight = 50;         //  设置tableViewcell高度   不设置默认是   30
+    menu.menuArrowStyle = menuArrowStyleHollow;// 设置菜单的旋转箭头的样式
     menu.CarverViewColor = [UIColor colorWithRed:0.5 green:0.5 blue:0.5 alpha:0.5];//设置遮罩层颜色
+    
+    // 三组菜单的数据导入方法
+    [menu createThreeMenuTitleArray:threeMenuTitleArray FirstArr:firstMenu SecondArr:secondMenu threeArr:threeMenu];
     
     // 三组菜单调用方法
     [menu createThreeMenuTitleArray:threeMenuTitleArray FirstArr:firstMenu SecondArr:secondMenu threeArr:threeMenu];
