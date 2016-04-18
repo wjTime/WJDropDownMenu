@@ -59,6 +59,7 @@
     // 三组菜单的数据导入方法
     [menu createThreeMenuTitleArray:threeMenuTitleArray FirstArr:firstMenu SecondArr:secondMenu threeArr:threeMenu];
     
+    // 设置rightItem点击收缩menu
     self.menu = menu;
     [self createRightNav];
 }
@@ -75,6 +76,7 @@
 }
 
 - (void)hideMenu{
+    //  点击收缩menu
     [self.menu drawBackMenu];
 }
 
