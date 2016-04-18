@@ -11,7 +11,7 @@
 #define cell_h   30
 #define window_h [UIScreen mainScreen].bounds.size.height
 #define carverAnimationDefalutTime 0.15
-#define menuTitleDefalutFont  [UIFont systemFontOfSize:11]
+#define menuTitleDefalutFont  [UIFont systemFontOfSize:12]
 #define TableTitleDefalutFont [UIFont systemFontOfSize:10]
 
 
