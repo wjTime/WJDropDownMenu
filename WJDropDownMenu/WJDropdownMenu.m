@@ -185,7 +185,7 @@
     }];
     self.thirdTableViewShow = NO;
     [UIView animateWithDuration:0.2 animations:^{
-        self.tableThird.frame = CGRectMake(self.tableViewWith,CGRectGetMaxY(self.backView.frame), self.tableViewWith, 0);
+        self.tableThird.frame = CGRectMake(self.tableViewWith * 2,CGRectGetMaxY(self.backView.frame), self.tableViewWith, 0);
     }];
     
     [self hideCarverView];
@@ -280,7 +280,7 @@
         [UIView animateWithDuration:0.2 animations:^{
             
             self.tableSecond.frame = CGRectMake(self.tableViewWith, CGRectGetMaxY(self.backView.frame), self.tableViewWith, 0);
-            self.tableThird.frame = CGRectMake(self.tableViewWith, CGRectGetMaxY(self.backView.frame), self.tableViewWith, 0);
+            self.tableThird.frame = CGRectMake(self.tableViewWith * 2, CGRectGetMaxY(self.backView.frame), self.tableViewWith, 0);
         }];
         
         [self hideCarverView];
@@ -328,7 +328,7 @@
             
             self.tableFirst.frame = CGRectMake(0, CGRectGetMaxY(self.backView.frame), self.tableViewWith, 0);
             self.tableSecond.frame = CGRectMake(self.tableViewWith, CGRectGetMaxY(self.backView.frame), self.tableViewWith, 0);
-            self.tableThird.frame = CGRectMake(self.tableViewWith, CGRectGetMaxY(self.backView.frame), self.tableViewWith, 0);
+            self.tableThird.frame = CGRectMake(self.tableViewWith * 2, CGRectGetMaxY(self.backView.frame), self.tableViewWith, 0);
         }completion:^(BOOL finished) {
             
             self.firstTableViewShow = NO;
