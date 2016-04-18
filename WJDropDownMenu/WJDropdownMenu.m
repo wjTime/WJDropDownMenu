@@ -588,7 +588,6 @@
             NSInteger i = indexPath.row;
             self.lastSecondCellIndex = indexPath.row;
             self.dataSourceThird = self.data[i];
-            NSLog(@"dataSource:%@",self.dataSourceThird[0]);
             [self.tableThird reloadData];
             [self showThirdTabelView:self.thirdTableViewShow];
         }else{
