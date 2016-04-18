@@ -45,6 +45,9 @@ fast dropdwon menu
     //  代理方法返回点击时对应的内容
     //(void)menuCellDidSelected:(NSString *)MenuTitle firstContent:(NSString *)firstContent andSecondContent:(NSString *)secondContent{}
     
+    // 点击收缩menu
+    [menu drawBackMenu];
+    
     
     
     
