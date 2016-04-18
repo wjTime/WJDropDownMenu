@@ -18,6 +18,8 @@ typedef enum:NSInteger{
 
 @protocol WJMenuDelegate <NSObject>
 
+
+@optional
 /**
  * 代理方法返回 菜单标题index:MenuTitleIndex  一级菜单index:firstIndex  二级菜单index:secondIndex
  */
@@ -27,6 +29,19 @@ typedef enum:NSInteger{
  * 代理方法返回 菜单标题:MenuTitle  一级菜单内容:firstContent  二级菜单内容:secondContent
  */
 - (void)menuCellDidSelected:(NSString *)MenuTitle firstContent:(NSString *)firstContent andSecondContent:(NSString *)secondContent;
+
+
+/**
+ * 代理方法返回 菜单标题index:MenuTitleIndex  一级菜单index:firstIndex  二级菜单index:secondIndex  三级菜单index:thirdIndex
+ */
+- (void)menuCellDidSelected:(NSInteger)MenuTitleIndex firstIndex:(NSInteger)firstIndex secondIndex:(NSInteger)secondIndex thirdIndex:(NSInteger)thirdIndex;
+
+/**
+ * 代理方法返回 菜单标题:MenuTitle  一级菜单内容:firstContent  三级菜单内容:thirdContent
+ */
+- (void)menuCellDidSelected:(NSString *)MenuTitle firstContent:(NSString *)firstContent secondContent:(NSString *)secondContent thirdContent:(NSString *)thirdContent;
+
+
 
 @end
 
@@ -91,5 +106,10 @@ typedef enum:NSInteger{
  * 创建四组下拉菜单
  */
 - (void)createFourMenuTitleArray:(NSArray *)menuTitleArray FirstArr:(NSArray *)firstArr SecondArr:(NSArray *)secondArr threeArr:(NSArray *)threeArr fourArr:(NSArray *)fourArr;
+
+/**
+ * 收缩菜单
+ */
+- (void)drawBackMenu;
 
 @end
