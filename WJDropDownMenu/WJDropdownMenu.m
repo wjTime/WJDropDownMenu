@@ -602,6 +602,8 @@
 }
 
 - (void)drawBackMenu{
+    CALayer *layer = self.bgLayers[self.lastSelectedIndex-100];
+    layer.transform = CATransform3DMakeRotation(M_PI*2, 0, 0, 1);
     self.firstTableViewShow = NO;
     [UIView animateWithDuration:0.2 animations:^{
         self.tableFirst.frame = CGRectMake(0, CGRectGetMaxY(self.backView.frame), self.tableViewWith, 0);
