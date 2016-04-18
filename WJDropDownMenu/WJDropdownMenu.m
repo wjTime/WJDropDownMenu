@@ -603,6 +603,7 @@
 }
 
 - (void)drawBackMenu{
+    self.firstTableViewShow = NO;
     [UIView animateWithDuration:0.2 animations:^{
         self.tableFirst.frame = CGRectMake(0, CGRectGetMaxY(self.backView.frame), self.tableViewWith, 0);
     }];
