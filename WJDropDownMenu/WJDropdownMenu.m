@@ -602,6 +602,9 @@
 }
 
 - (void)drawBackMenu{
+    if (self.lastSelectedIndex == -1) {
+        return;
+    }
     CALayer *layer = self.bgLayers[self.lastSelectedIndex-100];
     layer.transform = CATransform3DMakeRotation(M_PI*2, 0, 0, 1);
     self.firstTableViewShow = NO;
@@ -617,6 +620,7 @@
         self.tableThird.frame = CGRectMake(self.tableViewWith * 2,CGRectGetMaxY(self.backView.frame), self.tableViewWith, 0);
     }];
     [self hideCarverView];
+    self.lastSelectedIndex = -1;
     self.allData = nil;
     self.data = nil;
     self.dataSourceSecond = nil;
