@@ -2,7 +2,7 @@
 fast dropdwon menu
 
     //  平时工作需要有个下拉菜单，所以简单的封装了一个菜单功能，不需要遵循类似tableView的代理方法，直接导入数据就可以用，大家可以做一个参考使用,以下是demo
-    //  如有任何bug或不足之处请在githu不上找我，我会第一时间回复修正。
+    //  如有任何bug或不足之处请在github不上找我，我会第一时间回复修正。
 
     //  如果是有导航栏请清除自动适应设置
     self.automaticallyAdjustsScrollViewInsets = NO;
