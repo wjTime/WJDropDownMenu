@@ -1,9 +1,11 @@
 #import "ViewController.h"
 #import "WJDropdownMenu.h"
 
-@interface ViewController () <WJMenuDelegate>
+@interface ViewController () <WJMenuDelegate,UITableViewDataSource,UITableViewDelegate>
 
-@property (nonatomic,strong)WJDropdownMenu *menu;
+@property (nonatomic,strong)NSMutableArray *data;
+@property (nonatomic,weak)UITableView *tableView;
+@property (nonatomic,weak)WJDropdownMenu *menu;
 
 @end
 
@@ -11,10 +13,10 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    
     self.title = @"WJDropdownMenu";
+    [self createTableView];
     
-    //  平时工作需要有个下拉菜单，所以简单的封装了一个菜单功能，不需要遵循类似tableView的代理方法，直接导入数据就可以用，大家可以做一个参考使用,以下是demo
+    //  平时工作需要有个下拉菜单，所以简单的封装了一个菜单功能，不需要遵循类似tableView的代理方法，直接导入数据就可以用，大家可以做一个参考使用,以下是demo，如有任何bug或不足之处请在githu不上找我，我会第一时间回复修正。
     
     //  如果是有导航栏请清除自动适应设置
     self.automaticallyAdjustsScrollViewInsets = NO;
@@ -41,8 +43,12 @@
     // 第二中方法net网络请求一级一级导入数据，先在此导入菜单数据，然后分别再后面的net开头的代理方法中导入一级一级子菜单的数据
     [menu netCreateThreeMenuTitleArray:threeMenuTitleArray];
     
+    
     // 设置rightItem点击收缩menu
     [self createRightNav];
+    
+    
+    
 }
 
 - (void)createAllMenuData{
@@ -98,6 +104,8 @@
     label2.font = [UIFont systemFontOfSize:10];
     label2.text = @"点击返回的结果:";
     [self.view addSubview:label2];
+    
+    
 };
 
 
@@ -112,10 +120,17 @@
     label.lineBreakMode = NSLineBreakByCharWrapping;
     label.text = [NSString stringWithFormat:@"菜单title:%@,  一级菜单:%@,   二级子菜单:%@   三级子菜单:%@",MenuTitle,firstContent,secondContent,thirdContent];
     [self.view addSubview:label];
+
+    self.data = [NSMutableArray array];
+    [self.data addObject:[NSString stringWithFormat:@"%@ 的 detail data 1",secondContent]];
+    [self.data addObject:[NSString stringWithFormat:@"%@ 的 detail data 2",secondContent]];
+    [self.data addObject:[NSString stringWithFormat:@"%@ 的 detail data 3",secondContent]];
+    [self.tableView reloadData];
+
 };
 
 
-#pragma mark -- net网络获取数据代理方法返回点击时菜单对应的index
+#pragma mark -- net网络获取数据代理方法返回点击时菜单对应的index(导入子菜单数据)
 - (void)netMenuClickMenuIndex:(NSInteger)menuIndex menuTitle:(NSString *)menuTitle{
     
     // 模拟网络加载数据延时0.5秒，相当于传一个menuIndex的参数返回数据之后 调用netLoadFirstArray方法，将网络请求返回数据导入一级数据到菜单
@@ -137,7 +152,7 @@
     });
 }
 
-#pragma mark -- net网络获取数据代理方法返回点击时菜单和一级子菜单分别对应的index
+#pragma mark -- net网络获取数据代理方法返回点击时菜单和一级子菜单分别对应的index(导入子菜单数据)
 - (void)netMenuClickMenuIndex:(NSInteger)menuIndex menuTitle:(NSString *)menuTitle FirstIndex:(NSInteger)FirstIndex firstContent:(NSString *)firstContent{
     
     // 模拟网络加载数据延时0.5秒，相当于传menuIndex、FirstIndex的两个参数返回数据之后，调用 netLoadSecondArray 方法，将网络请求返回数据导入二级数据到菜单
@@ -177,6 +192,30 @@
         
     });
 }
+
+#pragma mark -- tableview
+
+- (void)createTableView{
+    UITableView *tableView = [[UITableView alloc]initWithFrame:CGRectMake(0, 104, self.view.frame.size.width, self.view.frame.size.height-104-122) style:UITableViewStylePlain];
+    tableView.delegate = self;
+    tableView.dataSource = self;
+    [self.view addSubview:tableView];
+    self.tableView = tableView;
+}
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
+    return self.data.count;
+}
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
+    static NSString *cellID = @"cellID";
+    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cellID];
+    if (cell == nil) {
+        cell = [[UITableViewCell alloc]initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:cellID];
+    }
+    cell.textLabel.text = self.data[indexPath.row];
+    cell.textLabel.font = [UIFont systemFontOfSize:12];
+    return cell;
+}
+
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
