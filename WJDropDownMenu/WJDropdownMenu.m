@@ -466,7 +466,7 @@
         }
         cell1.textLabel.text = self.dataSourceFirst[indexPath.row];
         cell1.textLabel.font = self.tableTitleFont ? [UIFont systemFontOfSize:self.tableTitleFont] : TableTitleDefalutFont;
-        if (!self.allData) {
+        if (!self.allData && !self.isNet) {
             cell1.selectionStyle = UITableViewCellSelectionStyleNone;
             cell1.accessoryType = UITableViewCellAccessoryNone;
         }else{
