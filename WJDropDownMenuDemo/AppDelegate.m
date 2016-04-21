@@ -1,15 +1,13 @@
 //
 //  AppDelegate.m
-//  WJDownMenu
+//  WJDropDownMenuDemo
 //
-//  Created by 高文杰 on 16/1/24.
-//  Copyright © 2016年 高文杰. All rights reserved.
+//  Created by 吴计强 on 16/4/21.
+//  Copyright © 2016年 com.firsttruck. All rights reserved.
 //
 
 #import "AppDelegate.h"
 #import "ViewController.h"
-
-
 @interface AppDelegate ()
 
 @end
@@ -18,7 +16,6 @@
 
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
-    // Override point for customization after application launch.
     self.window.rootViewController = [[UINavigationController alloc]initWithRootViewController:[[ViewController alloc]init]];
     self.window.backgroundColor = [UIColor whiteColor];
     return YES;

@@ -106,8 +106,8 @@
     label2.numberOfLines = 0;
     label2.lineBreakMode = NSLineBreakByCharWrapping;
     label2.textColor = [UIColor redColor];
-    //label2.text = @"此方法是新增的net网络点击加载数据，即子菜单的数据还没有出来，需要点击上级带单时加载网络请求后返回数据再导入一级一级联动的效果，因此模拟了网络加载延迟的效果";
-    label2.text = @"第一种方法返回的结果:";
+    label2.text = @"此方法是新增的net网络点击加载数据，即子菜单的数据还没有出来，需要点击上级带单时加载网络请求后返回数据再导入一级一级联动的效果，因此模拟了网络加载延迟的效果";
+    //label2.text = @"第一种方法返回的结果:";
     [self.view addSubview:label2];
     
     
@@ -125,13 +125,13 @@
     label.lineBreakMode = NSLineBreakByCharWrapping;
     label.text = [NSString stringWithFormat:@"菜单title:%@,  一级菜单:%@,   二级子菜单:%@   三级子菜单:%@",MenuTitle,firstContent,secondContent,thirdContent];
     [self.view addSubview:label];
-
+    
     self.data = [NSMutableArray array];
     [self.data addObject:[NSString stringWithFormat:@"%@ 的 detail data 1",secondContent]];
     [self.data addObject:[NSString stringWithFormat:@"%@ 的 detail data 2",secondContent]];
     [self.data addObject:[NSString stringWithFormat:@"%@ 的 detail data 3",secondContent]];
     [self.tableView reloadData];
-
+    
 };
 
 

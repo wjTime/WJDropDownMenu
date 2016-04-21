@@ -1,18 +1,18 @@
 //
-//  WJDownMenuTests.m
-//  WJDownMenuTests
+//  WJDropDownMenuDemoTests.m
+//  WJDropDownMenuDemoTests
 //
-//  Created by 高文杰 on 16/1/24.
-//  Copyright © 2016年 高文杰. All rights reserved.
+//  Created by 吴计强 on 16/4/21.
+//  Copyright © 2016年 com.firsttruck. All rights reserved.
 //
 
 #import <XCTest/XCTest.h>
 
-@interface WJDownMenuTests : XCTestCase
+@interface WJDropDownMenuDemoTests : XCTestCase
 
 @end
 
-@implementation WJDownMenuTests
+@implementation WJDropDownMenuDemoTests
 
 - (void)setUp {
     [super setUp];
