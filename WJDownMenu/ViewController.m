@@ -1,11 +1,3 @@
-//
-//  ViewController.m
-//  WJDownMenu
-//
-//  Created by 高文杰 on 16/1/24.
-//  Copyright © 2016年 高文杰. All rights reserved.
-//
-
 #import "ViewController.h"
 #import "WJDropdownMenu.h"
 
@@ -28,6 +20,33 @@
     self.automaticallyAdjustsScrollViewInsets = NO;
     NSArray *threeMenuTitleArray =  @[@"菜单A",@"菜单B",@"菜单C"];
     
+    // 创建menu
+    WJDropdownMenu *menu = [[WJDropdownMenu alloc]initWithFrame:CGRectMake(0, 64, self.view.frame.size.width, 40)];
+    menu.delegate = self;         //  设置代理
+    [self.view addSubview:menu];
+    self.menu = menu;
+    
+    // 设置属性(可不设置)
+    menu.caverAnimationTime = 0.2;//  增加了遮盖层动画时间设置   不设置默认是  0.15
+    menu.menuTitleFont = 12;      //  设置menuTitle字体大小    不设置默认是  11
+    menu.tableTitleFont = 11;     //  设置tableTitle字体大小   不设置默认是  10
+    menu.cellHeight = 38;         //  设置tableViewcell高度   不设置默认是  40
+    menu.menuArrowStyle = menuArrowStyleSolid;
+    menu.CarverViewColor = [UIColor colorWithRed:0.5 green:0.5 blue:0.5 alpha:0.5];//设置遮罩层颜色
+    
+#warning 此处有两种方法导入数据 1.第一种是直接导入菜单一级子菜单二级子菜单三级子菜单的所有数据  2.第二种是根据每次点击index的请求数据后返回下一菜单的数据时导入数据一级一级联动的网络请求数据所有的方法都是以net开头
+    // 第一种方法一次性导入所有菜单数据
+    //[self createAllMenuData];
+    
+    // 第二中方法net网络请求一级一级导入数据，先在此导入菜单数据，然后分别再后面的net开头的代理方法中导入一级一级子菜单的数据
+    [menu netCreateThreeMenuTitleArray:threeMenuTitleArray];
+    
+    // 设置rightItem点击收缩menu
+    [self createRightNav];
+}
+
+- (void)createAllMenuData{
+    NSArray *threeMenuTitleArray =  @[@"菜单A",@"菜单B",@"菜单C"];
     //  创建第一个菜单的first数据second数据
     NSArray *firstArrOne = [NSArray arrayWithObjects:@"A一级菜单1",@"A一级菜单2",@"A一级菜单3", nil];
     NSArray *firstMenu = [NSArray arrayWithObject:firstArrOne];
@@ -43,27 +62,8 @@
     NSArray *secondArrThree = @[@[@"C二级菜单11",@"C二级菜单12"],@[@"C二级菜单21",@"C二级菜单22",@"C二级菜单23",@"C二级菜单24"]];
     NSArray *threeMenu = [NSArray arrayWithObjects:firstArrThree,secondArrThree, nil];
     
-    // 创建menu
-    WJDropdownMenu *menu = [[WJDropdownMenu alloc]initWithFrame:CGRectMake(0, 64, self.view.frame.size.width, 40)];
-    menu.delegate = self;         //  设置代理
-    [self.view addSubview:menu];
-    
-    // 设置属性(可不设置)
-    menu.caverAnimationTime = 0.2;//  增加了遮盖层动画时间设置   不设置默认是  0.15
-    menu.menuTitleFont = 12;      //  设置menuTitle字体大小    不设置默认是  11
-    menu.tableTitleFont = 11;     //  设置tableTitle字体大小   不设置默认是  10
-    menu.cellHeight = 38;         //  设置tableViewcell高度   不设置默认是  40
-    menu.menuArrowStyle = menuArrowStyleSolid;
-    menu.CarverViewColor = [UIColor colorWithRed:0.5 green:0.5 blue:0.5 alpha:0.5];//设置遮罩层颜色
-    
-    // 三组菜单的数据导入方法
-    [menu createThreeMenuTitleArray:threeMenuTitleArray FirstArr:firstMenu SecondArr:secondMenu threeArr:threeMenu];
-    
-    // 设置rightItem点击收缩menu
-    self.menu = menu;
-    [self createRightNav];
+    [self.menu createThreeMenuTitleArray:threeMenuTitleArray FirstArr:firstMenu SecondArr:secondMenu threeArr:threeMenu];
 }
-
 
 - (void)createRightNav{
     UIButton *btn = [[UIButton alloc]initWithFrame:CGRectMake(0, 0, 60, 30)];
@@ -114,6 +114,69 @@
     [self.view addSubview:label];
 };
 
+
+#pragma mark -- net网络获取数据代理方法返回点击时菜单对应的index
+- (void)netMenuClickMenuIndex:(NSInteger)menuIndex menuTitle:(NSString *)menuTitle{
+    
+    // 模拟网络加载数据延时0.5秒，相当于传一个menuIndex的参数返回数据之后 调用netLoadFirstArray方法，将网络请求返回数据导入一级数据到菜单
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.5 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+        if (menuIndex == 0) {
+            
+            NSArray *firstArrTwo = [NSArray arrayWithObjects:@"A一级菜单1",@"A一级菜单2", nil];
+            [self.menu netLoadFirstArray:firstArrTwo];
+            
+        }
+        if (menuIndex == 1) {
+            NSArray *firstArrTwo = [NSArray arrayWithObjects:@"B一级菜单1",@"B一级菜单2", nil];
+            [self.menu netLoadFirstArray:firstArrTwo];
+        }
+        if (menuIndex == 2) {
+            NSArray *firstArrTwo = [NSArray arrayWithObjects:@"C一级菜单1",@"C一级菜单2", nil];
+            [self.menu netLoadFirstArray:firstArrTwo];
+        }
+    });
+}
+
+#pragma mark -- net网络获取数据代理方法返回点击时菜单和一级子菜单分别对应的index
+- (void)netMenuClickMenuIndex:(NSInteger)menuIndex menuTitle:(NSString *)menuTitle FirstIndex:(NSInteger)FirstIndex firstContent:(NSString *)firstContent{
+    
+    // 模拟网络加载数据延时0.5秒，相当于传menuIndex、FirstIndex的两个参数返回数据之后，调用 netLoadSecondArray 方法，将网络请求返回数据导入二级数据到菜单
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.5 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+        
+        if (menuIndex == 0) {
+            if (FirstIndex == 0) {
+                NSArray *secondArrTwo = @[@"A二级菜单11",@"A二级菜单12"];
+                [self.menu netLoadSecondArray:secondArrTwo];
+            }
+            if (FirstIndex == 1) {
+                NSArray *secondArrTwo = @[@"A二级菜单21",@"A二级菜单22"];
+                [self.menu netLoadSecondArray:secondArrTwo];
+            }
+        }
+        if (menuIndex == 1) {
+            if (FirstIndex == 0) {
+                NSArray *secondArrTwo = @[@"B二级菜单11",@"B二级菜单12"];
+                [self.menu netLoadSecondArray:secondArrTwo];
+            }
+            if (FirstIndex == 1) {
+                NSArray *secondArrTwo = @[@"B二级菜单21",@"B二级菜单22"];
+                [self.menu netLoadSecondArray:secondArrTwo];
+            }
+        }
+        if (menuIndex == 2) {
+            if (FirstIndex == 0) {
+                NSArray *secondArrTwo = @[@"C二级菜单11",@"C二级菜单12"];
+                [self.menu netLoadSecondArray:secondArrTwo];
+                
+            }
+            if (FirstIndex == 1) {
+                NSArray *secondArrTwo = @[@"C二级菜单21",@"C二级菜单22"];
+                [self.menu netLoadSecondArray:secondArrTwo];
+            }
+        }
+        
+    });
+}
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];

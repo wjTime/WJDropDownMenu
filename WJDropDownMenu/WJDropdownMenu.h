@@ -1,13 +1,3 @@
-//
-//  WJDropdownMenu.h
-//  WJDropDownMenu
-//
-//  Created by 文杰 on 16/1/23.
-//  Copyright © 2016年 wj. All rights reserved.
-//
-
-
-
 #import <UIKit/UIKit.h>
 
 
@@ -42,6 +32,10 @@ typedef enum:NSInteger{
 - (void)menuCellDidSelected:(NSString *)MenuTitle firstContent:(NSString *)firstContent secondContent:(NSString *)secondContent thirdContent:(NSString *)thirdContent;
 
 
+#pragma mark -- 一级一级点击网络获取数据的代理方法
+- (void)netMenuClickMenuIndex:(NSInteger)menuIndex menuTitle:(NSString *)menuTitle;
+
+- (void)netMenuClickMenuIndex:(NSInteger)menuIndex menuTitle:(NSString *)menuTitle FirstIndex:(NSInteger)FirstIndex firstContent:(NSString *)firstContent;
 
 @end
 
@@ -84,6 +78,7 @@ typedef enum:NSInteger{
  */
 @property (nonatomic,assign)menuArrowStyle menuArrowStyle;
 
+
 @property (nonatomic,assign) id<WJMenuDelegate>delegate;
 
 
@@ -111,5 +106,12 @@ typedef enum:NSInteger{
  * 收缩菜单
  */
 - (void)drawBackMenu;
+
+
+#pragma mark -- 一级一级点击网络获取数据创建
+- (void)netCreateThreeMenuTitleArray:(NSArray *)menuTitleArray;
+- (void)netLoadFirstArray:(NSArray *)firstArray;
+- (void)netLoadSecondArray:(NSArray *)SecondArray;
+
 
 @end

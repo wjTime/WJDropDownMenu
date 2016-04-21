@@ -51,6 +51,9 @@
 @property (nonatomic,assign) CGFloat        menuBaseHeight;
 
 
+@property (nonatomic,assign) BOOL            isNet;
+
+
 @end
 
 
@@ -217,7 +220,9 @@
         btn.titleLabel.font = self.menuTitleFont ? [UIFont systemFontOfSize:self.menuTitleFont] : menuTitleDefalutFont;
         [btn setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
         [btn setTitle:data[i] forState:UIControlStateNormal];
+        
         [btn addTarget:self action:@selector(showFirstTableView:) forControlEvents:UIControlEventTouchUpInside];
+        
         CGPoint bgLayerPoint = CGPointMake(self.frame.size.width
                                            /num-10, self.menuBaseHeight/2);
         CALayer *bgLayer = [self createBgLayerWithColor:[UIColor clearColor] andPosition:bgLayerPoint];
@@ -250,43 +255,56 @@
     [self.backView addSubview:VlineLbBom];
 }
 - (void)showFirstAndSecondTableView:(NSInteger)index{
-    
-    [self changeMenuDataWithIndex:index-100];
-    
-    if (self.firstTableViewShow == NO) {
-        
-        self.firstTableViewShow = YES;
-        
-        [self showCarverView];
-        
-        
-        CALayer *layer = self.bgLayers[index-100];
-        layer.transform = CATransform3DMakeRotation(M_PI, 0, 0, 1);
-        self.tableFirst.frame = CGRectMake(0, CGRectGetMaxY(self.backView.frame), self.tableViewWith, 0);
-        [UIView animateWithDuration:0.2 animations:^{
-            self.tableFirst.frame = CGRectMake(0, CGRectGetMaxY(self.backView.frame), self.tableViewWith, self.cellHeight*self.dataSourceFirst.count);
-        }];
-        
-    }else{
-        
-        CALayer *layer = self.bgLayers[index-100];
-        layer.transform = CATransform3DMakeRotation(M_PI*2, 0, 0, 1);
-        self.firstTableViewShow = NO;
-        self.tableFirst.frame = CGRectMake(0, CGRectGetMaxY(self.backView.frame), self.tableViewWith, self.cellHeight*self.dataSourceFirst.count);
-        [UIView animateWithDuration:0.2 animations:^{
-            self.tableFirst.frame = CGRectMake(0, CGRectGetMaxY(self.backView.frame), self.tableViewWith, 0);
-        }];
-        self.secondTableViewShow = NO;
-        [UIView animateWithDuration:0.2 animations:^{
-            
-            self.tableSecond.frame = CGRectMake(self.tableViewWith, CGRectGetMaxY(self.backView.frame), self.tableViewWith, 0);
-            self.tableThird.frame = CGRectMake(self.tableViewWith * 2, CGRectGetMaxY(self.backView.frame), self.tableViewWith, 0);
-        }];
-        
-        [self hideCarverView];
-        
-    }
     self.lastSelectedIndex = index;
+    void(^compelte)() = ^{
+        if (self.firstTableViewShow == NO) {
+            
+            self.firstTableViewShow = YES;
+            
+            [self showCarverView];
+            
+            
+            CALayer *layer = self.bgLayers[index-100];
+            layer.transform = CATransform3DMakeRotation(M_PI, 0, 0, 1);
+            self.tableFirst.frame = CGRectMake(0, CGRectGetMaxY(self.backView.frame), self.tableViewWith, 0);
+            [UIView animateWithDuration:0.2 animations:^{
+                self.tableFirst.frame = CGRectMake(0, CGRectGetMaxY(self.backView.frame), self.tableViewWith, self.cellHeight*self.dataSourceFirst.count);
+            }];
+            NSLog(@"self.dataSourceFirst:%@",self.dataSourceFirst);
+        }else{
+            
+            CALayer *layer = self.bgLayers[index-100];
+            layer.transform = CATransform3DMakeRotation(M_PI*2, 0, 0, 1);
+            self.firstTableViewShow = NO;
+            self.tableFirst.frame = CGRectMake(0, CGRectGetMaxY(self.backView.frame), self.tableViewWith, self.cellHeight*self.dataSourceFirst.count);
+            [UIView animateWithDuration:0.2 animations:^{
+                self.tableFirst.frame = CGRectMake(0, CGRectGetMaxY(self.backView.frame), self.tableViewWith, 0);
+            }];
+            self.secondTableViewShow = NO;
+            [UIView animateWithDuration:0.2 animations:^{
+                
+                self.tableSecond.frame = CGRectMake(self.tableViewWith, CGRectGetMaxY(self.backView.frame), self.tableViewWith, 0);
+                self.tableThird.frame = CGRectMake(self.tableViewWith * 2, CGRectGetMaxY(self.backView.frame), self.tableViewWith, 0);
+            }];
+            
+            [self hideCarverView];
+            
+        }
+        
+    };
+    
+    if (self.isNet) {
+        UIButton *btn = (UIButton *)[self viewWithTag:index];
+        if (_delegate && [_delegate respondsToSelector:@selector(netMenuClickMenuIndex: menuTitle:)]) {
+            [_delegate netMenuClickMenuIndex:index - 100 menuTitle:btn.titleLabel.text];
+        }
+    }else{
+        [self changeMenuDataWithIndex:index-100];
+        compelte();
+    }
+    
+    
+    
 }
 - (void)showCarverView{
     
@@ -510,7 +528,7 @@
             weakSelf.tableThird.frame = CGRectMake(self.tableViewWith * 2,CGRectGetMaxY(self.backView.frame), self.tableViewWith, 0);
         }];
         [weakSelf hideCarverView];
-        if (weakSelf.allData && !weakSelf.dataSourceThird) {
+        if (weakSelf.dataSourceSecond && !weakSelf.dataSourceThird) {
             [btn setTitle:weakSelf.dataSourceSecond[indexPath.row] forState:UIControlStateNormal];
             if (_delegate && [_delegate respondsToSelector:@selector(menuCellDidSelected:firstIndex:andSecondIndex:)]) {
                 
@@ -530,7 +548,7 @@
             }
             
         }
-        if (!weakSelf.allData && !weakSelf.dataSourceThird) {
+        if (!weakSelf.dataSourceSecond && !weakSelf.dataSourceThird) {
             [btn setTitle:weakSelf.dataSourceFirst[indexPath.row] forState:UIControlStateNormal];
             if (_delegate && [_delegate respondsToSelector:@selector(menuCellDidSelected:firstIndex:andSecondIndex:)]) {
                 [_delegate menuCellDidSelected:weakSelf.lastSelectedIndex-100 firstIndex:indexPath.row andSecondIndex:0];
@@ -546,7 +564,7 @@
             }
             
         }
-        if (weakSelf.allData && weakSelf.dataSourceThird) {
+        if (weakSelf.dataSourceSecond && weakSelf.dataSourceThird) {
             [btn setTitle:weakSelf.dataSourceThird[indexPath.row] forState:UIControlStateNormal];
             if (_delegate && [_delegate respondsToSelector:@selector(menuCellDidSelected:firstIndex:andSecondIndex:)]) {
                 
@@ -567,6 +585,7 @@
         }
         weakSelf.allData = nil;
         weakSelf.data = nil;
+        weakSelf.dataSourceFirst = nil;
         weakSelf.dataSourceSecond = nil;
         weakSelf.dataSourceThird = nil;
         
@@ -575,13 +594,22 @@
     if (tableView == self.tableFirst) {
         NSInteger i = indexPath.row;
         self.lastSelectedCellIndex = indexPath.row;
-        if (self.allData) {
-            self.dataSourceSecond = self.allData[i];
-            [self.tableSecond reloadData];
-            [self showSecondTabelView:self.secondTableViewShow];
+        if (self.isNet) {
+            UIButton *btn = (UIButton *)[self viewWithTag:self.lastSelectedIndex];
+            if (_delegate && [_delegate respondsToSelector:@selector(netMenuClickMenuIndex:menuTitle:FirstIndex:firstContent:)]) {
+                [_delegate netMenuClickMenuIndex:self.lastSelectedIndex-100 menuTitle:btn.titleLabel.text FirstIndex:i firstContent:self.dataSourceFirst[i]];
+            }
         }else{
-            complete();
-            
+            if (self.allData) {
+                
+                self.dataSourceSecond = self.allData[i];
+                [self.tableSecond reloadData];
+                [self showSecondTabelView:self.secondTableViewShow];
+                
+            }else{
+                complete();
+                
+            }
         }
     }else if (tableView == self.tableSecond) {
         if (self.data) {
@@ -605,6 +633,9 @@
     if (self.lastSelectedIndex == -1) {
         return;
     }
+    [self netHideTable];
+}
+- (void)netHideTable{
     CALayer *layer = self.bgLayers[self.lastSelectedIndex-100];
     layer.transform = CATransform3DMakeRotation(M_PI*2, 0, 0, 1);
     self.firstTableViewShow = NO;
@@ -633,5 +664,58 @@
     }
     return _allDataSource;
 }
+
+
+- (void)netCreateThreeMenuTitleArray:(NSArray *)menuTitleArray{
+    self.tableViewWith = self.frame.size.width/2;
+    self.isNet = YES;
+    self.menuBaseHeight = self.frame.size.height;
+    [self createMenuViewWithData:menuTitleArray];
+    [self createTableViewFirst];
+    [self createTableViewSecond];
+}
+
+- (void)netLoadSecondArray:(NSArray *)SecondArray{
+    self.dataSourceSecond = [NSMutableArray arrayWithArray:SecondArray];
+    [self.tableSecond reloadData];
+    [self showSecondTabelView:self.secondTableViewShow];
+}
+
+- (void)netLoadFirstArray:(NSArray *)firstArray{
+    [self createWithFirstData:firstArray];
+    [self netShowCommentTable];
+}
+
+- (void)netShowCommentTable{
+    NSInteger index = self.lastSelectedIndex;
+    if (self.firstTableViewShow == NO) {
+        self.firstTableViewShow = YES;
+        [self showCarverView];
+        CALayer *layer = self.bgLayers[index-100];
+        layer.transform = CATransform3DMakeRotation(M_PI, 0, 0, 1);
+        self.tableFirst.frame = CGRectMake(0, CGRectGetMaxY(self.backView.frame), self.tableViewWith, 0);
+        [UIView animateWithDuration:0.2 animations:^{
+            self.tableFirst.frame = CGRectMake(0, CGRectGetMaxY(self.backView.frame), self.tableViewWith, self.cellHeight*self.dataSourceFirst.count);
+        }];
+    }else{
+        CALayer *layer = self.bgLayers[index-100];
+        layer.transform = CATransform3DMakeRotation(M_PI*2, 0, 0, 1);
+        self.firstTableViewShow = NO;
+        self.tableFirst.frame = CGRectMake(0, CGRectGetMaxY(self.backView.frame), self.tableViewWith, self.cellHeight*self.dataSourceFirst.count);
+        [UIView animateWithDuration:0.2 animations:^{
+            self.tableFirst.frame = CGRectMake(0, CGRectGetMaxY(self.backView.frame), self.tableViewWith, 0);
+        }];
+        self.secondTableViewShow = NO;
+        [UIView animateWithDuration:0.2 animations:^{
+            
+            self.tableSecond.frame = CGRectMake(self.tableViewWith, CGRectGetMaxY(self.backView.frame), self.tableViewWith, 0);
+            self.tableThird.frame = CGRectMake(self.tableViewWith * 2, CGRectGetMaxY(self.backView.frame), self.tableViewWith, 0);
+        }];
+        
+        [self hideCarverView];
+    }
+}
+
+
 
 @end
