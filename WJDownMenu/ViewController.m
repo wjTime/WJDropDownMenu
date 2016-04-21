@@ -16,7 +16,8 @@
     self.title = @"WJDropdownMenu";
     [self createTableView];
     
-    //  平时工作需要有个下拉菜单，所以简单的封装了一个菜单功能，不需要遵循类似tableView的代理方法，直接导入数据就可以用，大家可以做一个参考使用,以下是demo，如有任何bug或不足之处请在githu不上找我，我会第一时间回复修正。
+    //  平时工作需要有个下拉菜单，所以简单的封装了一个菜单功能，不需要遵循类似tableView的代理方法，直接导入数据就可以用，大家可以做一个参考使用,以下是demo，
+    //  如有任何bug或不足之处请在github不上找我，我会第一时间回复修正。
     
     //  如果是有导航栏请清除自动适应设置
     self.automaticallyAdjustsScrollViewInsets = NO;
@@ -38,10 +39,10 @@
     
 #warning 此处有两种方法导入数据 1.第一种是直接导入菜单一级子菜单二级子菜单三级子菜单的所有数据  2.第二种是根据每次点击index的请求数据后返回下一菜单的数据时导入数据一级一级联动的网络请求数据所有的方法都是以net开头
     // 第一种方法一次性导入所有菜单数据
-    //[self createAllMenuData];
+    [self createAllMenuData];
     
     // 第二中方法net网络请求一级一级导入数据，先在此导入菜单数据，然后分别再后面的net开头的代理方法中导入一级一级子菜单的数据
-    [menu netCreateThreeMenuTitleArray:threeMenuTitleArray];
+    //[menu netCreateThreeMenuTitleArray:threeMenuTitleArray];
     
     
     // 设置rightItem点击收缩menu
