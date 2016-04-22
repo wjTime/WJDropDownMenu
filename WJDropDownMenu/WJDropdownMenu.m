@@ -169,7 +169,6 @@
     return layer;
 }
 - (BOOL)gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer shouldReceiveTouch:(UITouch *)touch{
-     NSLog(@"touch view class:%@",[touch.view class]);
     if ([touch.view isKindOfClass:[UIButton class]] || [NSStringFromClass([touch.view class]) isEqualToString:@"UITableViewCell"] || [NSStringFromClass([touch.view class]) isEqualToString:@"UITableViewCellContentView"]) {
         return NO;
     }else{
@@ -262,21 +261,15 @@
     self.lastSelectedIndex = index;
     void(^compelte)() = ^{
         if (self.firstTableViewShow == NO) {
-            
             self.firstTableViewShow = YES;
-            
             [self showCarverView];
-            
-            
             CALayer *layer = self.bgLayers[index-100];
             layer.transform = CATransform3DMakeRotation(M_PI, 0, 0, 1);
             self.tableFirst.frame = CGRectMake(0, CGRectGetMaxY(self.backView.frame), self.tableViewWith, 0);
             [UIView animateWithDuration:0.2 animations:^{
                 self.tableFirst.frame = CGRectMake(0, CGRectGetMaxY(self.backView.frame), self.tableViewWith, self.cellHeight*self.dataSourceFirst.count);
             }];
-            NSLog(@"self.dataSourceFirst:%@",self.dataSourceFirst);
         }else{
-            
             CALayer *layer = self.bgLayers[index-100];
             layer.transform = CATransform3DMakeRotation(M_PI*2, 0, 0, 1);
             self.firstTableViewShow = NO;
@@ -286,15 +279,11 @@
             }];
             self.secondTableViewShow = NO;
             [UIView animateWithDuration:0.2 animations:^{
-                
                 self.tableSecond.frame = CGRectMake(self.tableViewWith, CGRectGetMaxY(self.backView.frame), self.tableViewWith, 0);
                 self.tableThird.frame = CGRectMake(self.tableViewWith * 2, CGRectGetMaxY(self.backView.frame), self.tableViewWith, 0);
             }];
-            
             [self hideCarverView];
-            
         }
-        
     };
     
     if (self.isNet) {
@@ -511,7 +500,7 @@
     return nil;
 }
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
-    NSLog(@"click");
+
     __weak typeof(self)weakSelf = self;
     void (^complete)(void) = ^(void){
         CALayer *layer = self.bgLayers[weakSelf.lastSelectedIndex-100];
