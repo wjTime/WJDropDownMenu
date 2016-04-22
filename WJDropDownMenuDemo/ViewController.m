@@ -36,7 +36,7 @@
     menu.tableTitleFont = 11;     //  设置tableTitle字体大小   不设置默认是  10
     menu.cellHeight = 38;         //  设置tableViewcell高度   不设置默认是  40
     menu.menuArrowStyle = menuArrowStyleSolid; // 旋转箭头的样式(空心箭头 or 实心箭头)
-    menu.tableViewMaxHeight = 100;
+    menu.tableViewMaxHeight = 300; // tableView的最大高度(超过此高度就可以滑动显示)
     menu.CarverViewColor = [UIColor colorWithRed:0.5 green:0.5 blue:0.5 alpha:0.5];//设置遮罩层颜色
     
 #warning 此处有两种方法导入数据 1.第一种是直接导入菜单一级子菜单二级子菜单三级子菜单的所有数据  2.第二种是根据每次点击index的请求数据后返回下一菜单的数据时导入数据一级一级联动的网络请求数据所有的方法都是以net开头
