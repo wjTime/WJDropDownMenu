@@ -14,31 +14,27 @@ typedef enum:NSInteger{
 
 
 @optional
-/**
- * 代理方法返回 菜单标题index:MenuTitleIndex  一级菜单index:firstIndex  二级菜单index:secondIndex
- */
+#pragma mark -- 数据返回的代理方法
+
+/** 代理方法返回 菜单标题index:MenuTitleIndex  一级菜单index:firstIndex  二级菜单index:secondIndex */
 - (void)menuCellDidSelected:(NSInteger)MenuTitleIndex firstIndex:(NSInteger)firstIndex andSecondIndex:(NSInteger)secondIndex;
 
-/**
- * 代理方法返回 菜单标题:MenuTitle  一级菜单内容:firstContent  二级菜单内容:secondContent
- */
+/** 代理方法返回 菜单标题:MenuTitle  一级菜单内容:firstContent  二级菜单内容:secondContent */
 - (void)menuCellDidSelected:(NSString *)MenuTitle firstContent:(NSString *)firstContent andSecondContent:(NSString *)secondContent;
 
-
-/**
- * 代理方法返回 菜单标题index:MenuTitleIndex  一级菜单index:firstIndex  二级菜单index:secondIndex  三级菜单index:thirdIndex
- */
+/** 代理方法返回 菜单标题index:MenuTitleIndex  一级菜单index:firstIndex  二级菜单index:secondIndex  三级菜单index:thirdIndex */
 - (void)menuCellDidSelected:(NSInteger)MenuTitleIndex firstIndex:(NSInteger)firstIndex secondIndex:(NSInteger)secondIndex thirdIndex:(NSInteger)thirdIndex;
 
-/**
- * 代理方法返回 菜单标题:MenuTitle  一级菜单内容:firstContent  三级菜单内容:thirdContent
- */
+/** 代理方法返回 菜单标题:MenuTitle  一级菜单内容:firstContent 二级菜单内容:secondContent  三级菜单内容:thirdContent */
 - (void)menuCellDidSelected:(NSString *)MenuTitle firstContent:(NSString *)firstContent secondContent:(NSString *)secondContent thirdContent:(NSString *)thirdContent;
 
 
-#pragma mark -- 一级一级点击网络获取数据的代理方法
+#pragma mark -- net一级一级点击网络获取数据的代理方法（在此代理方法中调用 netCreate 开头的方法 导入一级一级网络请求返回的数据）
+
+/** net代理方法返回 菜单标题index:MenuTitleIndex 菜单标题:MenuTitle */
 - (void)netMenuClickMenuIndex:(NSInteger)menuIndex menuTitle:(NSString *)menuTitle;
 
+/** net代理方法返回 菜单标题index:MenuTitleIndex 菜单标题:MenuTitle  一级菜单内容:firstContent  一级菜单内容:firstContent */
 - (void)netMenuClickMenuIndex:(NSInteger)menuIndex menuTitle:(NSString *)menuTitle FirstIndex:(NSInteger)FirstIndex firstContent:(NSString *)firstContent;
 
 @end
@@ -47,75 +43,56 @@ typedef enum:NSInteger{
 
 @interface WJDropdownMenu : UIView<UITableViewDataSource,UITableViewDelegate,UIGestureRecognizerDelegate>
 
-/**
- * 关闭遮盖功能
- */
+/** 关闭遮盖功能 */
 @property (nonatomic,strong)UIColor *CarverViewColor;
 
-/**
- * 遮盖的动画时间
- */
+/** 遮盖的动画时间 */
 @property (nonatomic,assign)CGFloat caverAnimationTime;
 
-/**
- * 菜单title的字体大小
- */
+/** 菜单title的字体大小 */
 @property (nonatomic,assign)CGFloat menuTitleFont;
 
-/**
- * 下拉菜单的的字体大小
- */
+/** 下拉菜单的的字体大小 */
 @property (nonatomic,assign)CGFloat tableTitleFont;
 
-/**
- * 下拉菜单的的字体大小
- */
+/** 下拉菜单的的字体大小 */
 @property (nonatomic,assign)CGFloat menuHeight;
 
-/**
- * 下拉菜单cell的高度
- */
+/** 下拉菜单cell的高度 */
 @property (nonatomic,assign)CGFloat cellHeight;
 
-/**
- * 旋转箭头的样式
- */
+/** 旋转箭头的样式 */
 @property (nonatomic,assign)menuArrowStyle menuArrowStyle;
 
-
+/** 设置代理 */
 @property (nonatomic,assign) id<WJMenuDelegate>delegate;
 
-
-/**
- * 创建一组下拉菜单
- */
+#pragma mark -- 一次性创建所有菜单数据
+/** 创建一组下拉菜单 */
 - (void)createOneMenuTitleArray:(NSArray *)menuTitleArray FirstArray:(NSArray *)FirstArray;
 
-/**
- * 创建两组下拉菜单
- */
+/** 创建两组下拉菜单 */
 - (void)createTwoMenuTitleArray:(NSArray *)menuTitleArray FirstArr:(NSArray *)firstArr SecondArr:(NSArray *)secondArr;
 
-/**
- * 创建三组下拉菜单
- */
+/** 创建三组下拉菜单 */
 - (void)createThreeMenuTitleArray:(NSArray *)menuTitleArray FirstArr:(NSArray *)firstArr SecondArr:(NSArray *)secondArr threeArr:(NSArray *)threeArr;
 
-/**
- * 创建四组下拉菜单
- */
+/** 创建四组下拉菜单 */
 - (void)createFourMenuTitleArray:(NSArray *)menuTitleArray FirstArr:(NSArray *)firstArr SecondArr:(NSArray *)secondArr threeArr:(NSArray *)threeArr fourArr:(NSArray *)fourArr;
 
-
-/**
- * 收缩菜单
- */
+/** 收缩菜单 */
 - (void)drawBackMenu;
 
 
-#pragma mark -- 一级一级点击网络获取数据创建
-- (void)netCreateThreeMenuTitleArray:(NSArray *)menuTitleArray;
+#pragma mark -- net一级一级点击网络获取数据创建
+
+/** net创建下拉菜单 */
+- (void)netCreateMenuTitleArray:(NSArray *)menuTitleArray;
+
+/** net导入一级菜单数据 */
 - (void)netLoadFirstArray:(NSArray *)firstArray;
+
+/** net导入二级菜单数据 */
 - (void)netLoadSecondArray:(NSArray *)SecondArray;
 
 

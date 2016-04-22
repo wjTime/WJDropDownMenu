@@ -22,7 +22,7 @@
     //  如果是有导航栏请清除自动适应设置
     self.automaticallyAdjustsScrollViewInsets = NO;
     
-    NSArray *threeMenuTitleArray =  @[@"菜单A",@"菜单B",@"菜单C"];
+    NSArray *threeMenuTitleArray =  @[@"菜单A",@"菜单B"];
     
     // 创建menu
     WJDropdownMenu *menu = [[WJDropdownMenu alloc]initWithFrame:CGRectMake(0, 64, self.view.frame.size.width, 40)];
@@ -43,8 +43,7 @@
     //[self createAllMenuData];
 
     // 第二中方法net网络请求一级一级导入数据，先在此导入菜单数据，然后分别再后面的net开头的代理方法中导入一级一级子菜单的数据
-    [menu netCreateThreeMenuTitleArray:threeMenuTitleArray];
-    
+    [menu netCreateMenuTitleArray:threeMenuTitleArray];
     // 设置rightItem点击收缩menu
     [self createRightNav];
     

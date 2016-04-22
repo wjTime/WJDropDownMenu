@@ -282,13 +282,13 @@
     };
     
     if (self.isNet) {
-        if (templastSelecte != index) {
+        if (templastSelecte == index && self.firstTableViewShow) {
+            compelte();
+        }else{
             UIButton *btn = (UIButton *)[self viewWithTag:index];
             if (_delegate && [_delegate respondsToSelector:@selector(netMenuClickMenuIndex: menuTitle:)]) {
                 [_delegate netMenuClickMenuIndex:index - 100 menuTitle:btn.titleLabel.text];
             }
-        }else{
-            compelte();
         }
     }else{
         [self changeMenuDataWithIndex:index-100];
@@ -661,7 +661,8 @@
 }
 
 
-- (void)netCreateThreeMenuTitleArray:(NSArray *)menuTitleArray{
+
+- (void)netCreateMenuTitleArray:(NSArray *)menuTitleArray{
     self.tableViewWith = self.frame.size.width/2;
     self.isNet = YES;
     self.menuBaseHeight = self.frame.size.height;
