@@ -308,7 +308,6 @@
 }
 - (void)hideCarverView{
     
-    
     if (!self.caverAnimationTime) {
         self.caverAnimationTime = carverAnimationDefalutTime;
     }
@@ -617,7 +616,7 @@
 
 
 - (void)drawBackMenu{
-    if (self.lastSelectedIndex == -1) {
+    if (self.lastSelectedIndex == -1 || !self.firstTableViewShow) {
         return;
     }
     [self netHideTable];
@@ -626,7 +625,9 @@
 
 
 #pragma mark -- net
+
 - (void)netHideTable{
+
     CALayer *layer = self.bgLayers[self.lastSelectedIndex-100];
     layer.transform = CATransform3DMakeRotation(M_PI*2, 0, 0, 1);
     self.firstTableViewShow = NO;
