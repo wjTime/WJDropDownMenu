@@ -239,7 +239,7 @@
     
     for (int i = 0; i < num; i++) {
         UILabel *lineLb = [[UILabel alloc]initWithFrame:CGRectMake((btnW+1)*i+btnW, self.menuBaseHeight/10, 1, self.menuBaseHeight/10*8)];
-        lineLb.backgroundColor = [UIColor lightGrayColor];
+        lineLb.backgroundColor = [UIColor colorWithRed:219/255.0 green:219/255.0 blue:219/255.0 alpha:1];// 分割线颜色
         if (i == num - 1) {
             lineLb.hidden = YES;
         }
@@ -249,10 +249,10 @@
     
     
     UILabel *VlineLbTop = [[UILabel alloc]initWithFrame:CGRectMake(0, 0, self.backView.frame.size.width, 1)];
-    VlineLbTop.backgroundColor = [UIColor lightGrayColor];
+    VlineLbTop.backgroundColor = [UIColor colorWithRed:219/255.0 green:219/255.0 blue:219/255.0 alpha:1];// 顶部线的颜色
     
     UILabel *VlineLbBom = [[UILabel alloc]initWithFrame:CGRectMake(0, self.menuBaseHeight, self.backView.frame.size.width, 1)];
-    VlineLbBom.backgroundColor = [UIColor lightGrayColor];
+    VlineLbBom.backgroundColor = [UIColor colorWithRed:195/255.0 green:195/255.0 blue:195/255.0 alpha:1];// 底部线颜色
     
     [self.backView addSubview:VlineLbTop];
     [self.backView addSubview:VlineLbBom];
