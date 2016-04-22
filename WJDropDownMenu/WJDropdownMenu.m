@@ -258,18 +258,14 @@
 - (void)showFirstAndSecondTableView:(NSInteger)index{
     NSInteger templastSelecte = self.lastSelectedIndex;
     self.lastSelectedIndex = index;
-    CGFloat TableViewW = self.cellHeight*self.dataSourceFirst.count;
-    CGFloat MaxHeigth = self.tableViewMaxHeight ? self.tableViewMaxHeight : tableViewMaxHeightDefalut;
-    if (TableViewW > MaxHeigth) {
-        self.tableFirst.scrollEnabled = YES;
-        TableViewW = MaxHeigth;
-    }
     void(^compelte)() = ^{
         CGFloat TableViewW = self.cellHeight*self.dataSourceFirst.count;
         CGFloat MaxHeigth = self.tableViewMaxHeight ? self.tableViewMaxHeight : tableViewMaxHeightDefalut;
         if (TableViewW > MaxHeigth) {
             self.tableFirst.scrollEnabled = YES;
             TableViewW = MaxHeigth;
+        }else{
+            self.tableFirst.scrollEnabled = NO;
         }
         if (self.firstTableViewShow == NO) {
             [self showCarverView];
@@ -375,6 +371,8 @@
     if (TableViewW > MaxHeigth) {
         self.tableSecond.scrollEnabled = YES;
         TableViewW = MaxHeigth;
+    }else{
+        self.tableSecond.scrollEnabled = NO;
     }
     if (self.secondTableViewShow == YES) {
         [self showCarverView];
@@ -398,6 +396,8 @@
     if (TableViewW > MaxHeigth) {
         self.tableThird.scrollEnabled = YES;
         TableViewW = MaxHeigth;
+    }else{
+        self.tableThird.scrollEnabled = NO;
     }
     if (self.thirdTableViewShow == YES) {
         [self showCarverView];
@@ -716,6 +716,8 @@
     if (TableViewW > MaxHeigth) {
         self.tableFirst.scrollEnabled = YES;
         TableViewW = MaxHeigth;
+    }else{
+        self.tableFirst.scrollEnabled = NO;
     }
     if (self.firstTableViewShow == NO) {
         [self showCarverView];
