@@ -29,7 +29,7 @@ typedef enum:NSInteger{
 - (void)menuCellDidSelected:(NSString *)MenuTitle firstContent:(NSString *)firstContent secondContent:(NSString *)secondContent thirdContent:(NSString *)thirdContent;
 
 
-#pragma mark -- net一级一级点击网络获取数据的代理方法（在此代理方法中调用 netCreate 开头的方法 导入一级一级网络请求返回的数据）
+#pragma mark -- net一级一级点击网络获取数据的代理方法（在此代理方法中调用 netLoad 开头的方法 导入一级一级网络请求返回的数据）
 
 /** net代理方法返回 菜单标题index:MenuTitleIndex 菜单标题:MenuTitle */
 - (void)netMenuClickMenuIndex:(NSInteger)menuIndex menuTitle:(NSString *)menuTitle;
@@ -43,6 +43,8 @@ typedef enum:NSInteger{
 
 @interface WJDropdownMenu : UIView<UITableViewDataSource,UITableViewDelegate,UIGestureRecognizerDelegate>
 
+
+#pragma mark -- 属性设置
 /** 关闭遮盖功能 */
 @property (nonatomic,strong)UIColor *CarverViewColor;
 
@@ -66,6 +68,8 @@ typedef enum:NSInteger{
 
 /** 设置代理 */
 @property (nonatomic,assign) id<WJMenuDelegate>delegate;
+
+
 
 #pragma mark -- 一次性创建所有菜单数据
 /** 创建一组下拉菜单 */

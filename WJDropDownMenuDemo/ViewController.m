@@ -44,6 +44,7 @@
 
     // 第二中方法net网络请求一级一级导入数据，先在此导入菜单数据，然后分别再后面的net开头的代理方法中导入一级一级子菜单的数据
     [menu netCreateMenuTitleArray:threeMenuTitleArray];
+    
     // 设置rightItem点击收缩menu
     [self createRightNav];
     
