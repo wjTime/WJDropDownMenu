@@ -22,7 +22,7 @@
     //  如果是有导航栏请清除自动适应设置
     self.automaticallyAdjustsScrollViewInsets = NO;
     
-    NSArray *threeMenuTitleArray =  @[@"菜单A",@"菜单B"];
+    //NSArray *threeMenuTitleArray =  @[@"菜单A",@"菜单B"];
     
     // 创建menu
     WJDropdownMenu *menu = [[WJDropdownMenu alloc]initWithFrame:CGRectMake(0, 64, self.view.frame.size.width, 40)];
@@ -41,10 +41,10 @@
     
 #warning 此处有两种方法导入数据 1.第一种是直接导入菜单一级子菜单二级子菜单三级子菜单的所有数据  2.第二种是根据每次点击index的请求数据后返回下一菜单的数据时导入数据一级一级联动的网络请求数据所有的方法都是以net开头
     // 第一种方法一次性导入所有菜单数据
-    //[self createAllMenuData];
+    [self createAllMenuData];
 
     // 第二中方法net网络请求一级一级导入数据，先在此导入菜单数据，然后分别再后面的net开头的代理方法中导入一级一级子菜单的数据
-    [menu netCreateMenuTitleArray:threeMenuTitleArray];
+    //[menu netCreateMenuTitleArray:threeMenuTitleArray];
     
     // 设置rightItem点击收缩menu
     [self createRightNav];
@@ -107,8 +107,8 @@
     label2.numberOfLines = 0;
     label2.lineBreakMode = NSLineBreakByCharWrapping;
     label2.textColor = [UIColor redColor];
-    label2.text = @"此方法是新增的net网络点击加载数据，即子菜单的数据还没有出来，需要点击上级带单时加载网络请求后返回数据再导入一级一级联动的效果，因此模拟了网络加载延迟的效果";
-    //label2.text = @"第一种方法返回的结果:";
+    //label2.text = @"此方法是新增的net网络点击加载数据，即子菜单的数据还没有出来，需要点击上级带单时加载网络请求后返回数据再导入一级一级联动的效果，因此模拟了网络加载延迟的效果";
+    label2.text = @"第一种方法返回的结果:";
     [self.view addSubview:label2];
     
     
@@ -135,7 +135,7 @@
     
 };
 
-#if 1
+#if 0
 
 #pragma mark -- net网络获取数据代理方法返回点击时菜单对应的index(导入子菜单数据)
 - (void)netMenuClickMenuIndex:(NSInteger)menuIndex menuTitle:(NSString *)menuTitle{

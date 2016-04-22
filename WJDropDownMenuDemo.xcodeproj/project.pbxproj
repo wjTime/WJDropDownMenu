@@ -7,7 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		CBB2BBE91CC9F4CD00E59EDB /* WJDropDownMenuTableViewBottom@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = CBB2BBE81CC9F4CD00E59EDB /* WJDropDownMenuTableViewBottom@2x.png */; };
 		CBD5BE101CC8C09800860937 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = CBD5BE0F1CC8C09800860937 /* main.m */; };
 		CBD5BE131CC8C09800860937 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = CBD5BE121CC8C09800860937 /* AppDelegate.m */; };
 		CBD5BE161CC8C09800860937 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = CBD5BE151CC8C09800860937 /* ViewController.m */; };
@@ -37,7 +36,6 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		CBB2BBE81CC9F4CD00E59EDB /* WJDropDownMenuTableViewBottom@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "WJDropDownMenuTableViewBottom@2x.png"; sourceTree = "<group>"; };
 		CBD5BE0B1CC8C09800860937 /* WJDropDownMenuDemo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = WJDropDownMenuDemo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		CBD5BE0F1CC8C09800860937 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		CBD5BE111CC8C09800860937 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
@@ -149,7 +147,6 @@
 		CBD5BE411CC8C10400860937 /* WJDropDownMenu */ = {
 			isa = PBXGroup;
 			children = (
-				CBB2BBE81CC9F4CD00E59EDB /* WJDropDownMenuTableViewBottom@2x.png */,
 				CBD5BE421CC8C10400860937 /* WJDropdownMenu.h */,
 				CBD5BE431CC8C10400860937 /* WJDropdownMenu.m */,
 			);
@@ -259,7 +256,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				CBB2BBE91CC9F4CD00E59EDB /* WJDropDownMenuTableViewBottom@2x.png in Resources */,
 				CBD5BE1E1CC8C09800860937 /* LaunchScreen.storyboard in Resources */,
 				CBD5BE1B1CC8C09800860937 /* Assets.xcassets in Resources */,
 				CBD5BE191CC8C09800860937 /* Main.storyboard in Resources */,
