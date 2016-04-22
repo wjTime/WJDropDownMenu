@@ -253,10 +253,10 @@
     [self.backView addSubview:VlineLbBom];
 }
 - (void)showFirstAndSecondTableView:(NSInteger)index{
+    NSInteger templastSelecte = self.lastSelectedIndex;
     self.lastSelectedIndex = index;
     void(^compelte)() = ^{
         if (self.firstTableViewShow == NO) {
-            self.firstTableViewShow = YES;
             [self showCarverView];
             CALayer *layer = self.bgLayers[index-100];
             layer.transform = CATransform3DMakeRotation(M_PI, 0, 0, 1);
@@ -282,9 +282,13 @@
     };
     
     if (self.isNet) {
-        UIButton *btn = (UIButton *)[self viewWithTag:index];
-        if (_delegate && [_delegate respondsToSelector:@selector(netMenuClickMenuIndex: menuTitle:)]) {
-            [_delegate netMenuClickMenuIndex:index - 100 menuTitle:btn.titleLabel.text];
+        if (templastSelecte != index) {
+            UIButton *btn = (UIButton *)[self viewWithTag:index];
+            if (_delegate && [_delegate respondsToSelector:@selector(netMenuClickMenuIndex: menuTitle:)]) {
+                [_delegate netMenuClickMenuIndex:index - 100 menuTitle:btn.titleLabel.text];
+            }
+        }else{
+            compelte();
         }
     }else{
         [self changeMenuDataWithIndex:index-100];
@@ -295,7 +299,7 @@
     
 }
 - (void)showCarverView{
-    
+    self.firstTableViewShow = YES;
     if (!self.caverAnimationTime) {
         self.caverAnimationTime = carverAnimationDefalutTime;
     }
@@ -307,7 +311,7 @@
     
 }
 - (void)hideCarverView{
-    
+    self.firstTableViewShow = NO;
     if (!self.caverAnimationTime) {
         self.caverAnimationTime = carverAnimationDefalutTime;
     }
@@ -616,7 +620,7 @@
 
 
 - (void)drawBackMenu{
-    if (self.lastSelectedIndex == -1 || !self.firstTableViewShow) {
+    if (!self.firstTableViewShow) {
         return;
     }
     [self netHideTable];
@@ -643,7 +647,6 @@
         self.tableThird.frame = CGRectMake(self.tableViewWith * 2,CGRectGetMaxY(self.backView.frame), self.tableViewWith, 0);
     }];
     [self hideCarverView];
-    self.lastSelectedIndex = -1;
     self.allData = nil;
     self.data = nil;
     self.dataSourceSecond = nil;
@@ -681,7 +684,6 @@
 - (void)netShowCommentTable{
     NSInteger index = self.lastSelectedIndex;
     if (self.firstTableViewShow == NO) {
-        self.firstTableViewShow = YES;
         [self showCarverView];
         CALayer *layer = self.bgLayers[index-100];
         layer.transform = CATransform3DMakeRotation(M_PI, 0, 0, 1);
