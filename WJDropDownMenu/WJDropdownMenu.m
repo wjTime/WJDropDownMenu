@@ -169,10 +169,14 @@
     return layer;
 }
 - (BOOL)gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer shouldReceiveTouch:(UITouch *)touch{
-    if ([touch.view isKindOfClass:[UIButton class]] || [NSStringFromClass([touch.view class]) isEqualToString:@"UITableViewCell"]) {
+     NSLog(@"touch view class:%@",[touch.view class]);
+    if ([touch.view isKindOfClass:[UIButton class]] || [NSStringFromClass([touch.view class]) isEqualToString:@"UITableViewCell"] || [NSStringFromClass([touch.view class]) isEqualToString:@"UITableViewCellContentView"]) {
         return NO;
+    }else{
+        return YES;
     }
-    return YES;
+   
+    
 }
 - (void)remover{
     CALayer *layer = self.bgLayers[self.lastSelectedIndex-100];
@@ -507,9 +511,7 @@
     return nil;
 }
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
-    
-    
-    
+    NSLog(@"click");
     __weak typeof(self)weakSelf = self;
     void (^complete)(void) = ^(void){
         CALayer *layer = self.bgLayers[weakSelf.lastSelectedIndex-100];
