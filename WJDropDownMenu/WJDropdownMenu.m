@@ -1,11 +1,6 @@
-//
-//  WJDropdownMenu.m
-//  WJDropDownMenu
-//
-//  Created by 文杰 on 16/1/23.
-//  Copyright © 2016年 wj. All rights reserved.
-//
 
+// 如有任何bug、不足、功能不全之处请在github不上找我，我会第一时间回复并修正
+// github:https://github.com/wjTime/WJDropDownMenu.git 实时更新中...
 
 
 #define cell_h   40
@@ -201,7 +196,7 @@
 - (void)createMenuViewWithData:(NSArray *)data{
     self.cellHeight = self.cellHeight ? self.cellHeight : cell_h;
     self.lastSelectedIndex = -1;
-    self.backgroundColor = self.CarverViewColor ? self.CarverViewColor : [UIColor colorWithRed:0.5 green:0.5 blue:0.5 alpha:0.2];
+    self.backgroundColor = self.CarverViewColor ? self.CarverViewColor : [UIColor colorWithRed:0.7 green:0.7 blue:0.7 alpha:0.5];
     self.frame = CGRectMake(self.frame.origin.x, self.frame.origin.y, self.frame.size.width
                             , self.menuBaseHeight);
     UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(remover)];
