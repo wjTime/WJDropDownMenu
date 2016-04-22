@@ -66,6 +66,9 @@ typedef enum:NSInteger{
 /** 旋转箭头的样式 */
 @property (nonatomic,assign)menuArrowStyle menuArrowStyle;
 
+/** 下拉的Tableview最大高度(超出高度可以滑动显示) */
+@property (nonatomic,assign)CGFloat tableViewMaxHeight;
+
 /** 设置代理 */
 @property (nonatomic,assign) id<WJMenuDelegate>delegate;
 

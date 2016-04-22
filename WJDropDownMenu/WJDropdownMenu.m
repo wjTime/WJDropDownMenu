@@ -6,6 +6,7 @@
 #define cell_h   40
 #define window_h [UIScreen mainScreen].bounds.size.height
 #define carverAnimationDefalutTime 0.15
+#define tableViewMaxHeightDefalut  300
 #define menuTitleDefalutFont  [UIFont systemFontOfSize:12]
 #define TableTitleDefalutFont [UIFont systemFontOfSize:10]
 
@@ -23,6 +24,8 @@
 @property (nonatomic,strong) UITableView    *tableFirst;
 @property (nonatomic,strong) UITableView    *tableSecond;
 @property (nonatomic,strong) UITableView    *tableThird;
+
+
 
 @property (nonatomic,strong) NSMutableArray *bgLayers;
 @property (nonatomic,strong) NSMutableArray *dataSourceFirst;
@@ -255,20 +258,33 @@
 - (void)showFirstAndSecondTableView:(NSInteger)index{
     NSInteger templastSelecte = self.lastSelectedIndex;
     self.lastSelectedIndex = index;
+    CGFloat TableViewW = self.cellHeight*self.dataSourceFirst.count;
+    CGFloat MaxHeigth = self.tableViewMaxHeight ? self.tableViewMaxHeight : tableViewMaxHeightDefalut;
+    if (TableViewW > MaxHeigth) {
+        self.tableFirst.scrollEnabled = YES;
+        TableViewW = MaxHeigth;
+    }
     void(^compelte)() = ^{
+        CGFloat TableViewW = self.cellHeight*self.dataSourceFirst.count;
+        CGFloat MaxHeigth = self.tableViewMaxHeight ? self.tableViewMaxHeight : tableViewMaxHeightDefalut;
+        if (TableViewW > MaxHeigth) {
+            self.tableFirst.scrollEnabled = YES;
+            TableViewW = MaxHeigth;
+        }
         if (self.firstTableViewShow == NO) {
             [self showCarverView];
             CALayer *layer = self.bgLayers[index-100];
             layer.transform = CATransform3DMakeRotation(M_PI, 0, 0, 1);
             self.tableFirst.frame = CGRectMake(0, CGRectGetMaxY(self.backView.frame), self.tableViewWith, 0);
             [UIView animateWithDuration:0.2 animations:^{
-                self.tableFirst.frame = CGRectMake(0, CGRectGetMaxY(self.backView.frame), self.tableViewWith, self.cellHeight*self.dataSourceFirst.count);
+            self.tableFirst.frame = CGRectMake(0, CGRectGetMaxY(self.backView.frame), self.tableViewWith, TableViewW);
+            }completion:^(BOOL finished) {
             }];
         }else{
             CALayer *layer = self.bgLayers[index-100];
             layer.transform = CATransform3DMakeRotation(M_PI*2, 0, 0, 1);
             self.firstTableViewShow = NO;
-            self.tableFirst.frame = CGRectMake(0, CGRectGetMaxY(self.backView.frame), self.tableViewWith, self.cellHeight*self.dataSourceFirst.count);
+            self.tableFirst.frame = CGRectMake(0, CGRectGetMaxY(self.backView.frame), self.tableViewWith, TableViewW);
             [UIView animateWithDuration:0.2 animations:^{
                 self.tableFirst.frame = CGRectMake(0, CGRectGetMaxY(self.backView.frame), self.tableViewWith, 0);
             }];
@@ -354,34 +370,46 @@
     
 }
 - (void)showSecondTabelView:(BOOL)secondTableViewShow{
+    CGFloat TableViewW = self.cellHeight*self.dataSourceSecond.count;
+    CGFloat MaxHeigth = self.tableViewMaxHeight ? self.tableViewMaxHeight : tableViewMaxHeightDefalut;
+    if (TableViewW > MaxHeigth) {
+        self.tableSecond.scrollEnabled = YES;
+        TableViewW = MaxHeigth;
+    }
     if (self.secondTableViewShow == YES) {
         [self showCarverView];
         [UIView animateWithDuration:0.2 animations:^{
-            self.tableSecond.frame = CGRectMake(self.tableViewWith, CGRectGetMaxY(self.backView.frame), self.tableViewWith, self.cellHeight*self.dataSourceSecond.count);
+            self.tableSecond.frame = CGRectMake(self.tableViewWith, CGRectGetMaxY(self.backView.frame), self.tableViewWith, TableViewW);
         }];
     }else{
         [self showCarverView];
         self.secondTableViewShow = YES;
         self.tableSecond.frame = CGRectMake(self.tableViewWith, CGRectGetMaxY(self.backView.frame), self.tableViewWith, 0);
         [UIView animateWithDuration:0.2 animations:^{
-            self.tableSecond.frame = CGRectMake(self.tableViewWith, CGRectGetMaxY(self.backView.frame),self.tableViewWith, self.cellHeight*self.dataSourceSecond.count);
+            self.tableSecond.frame = CGRectMake(self.tableViewWith, CGRectGetMaxY(self.backView.frame),self.tableViewWith, TableViewW);
         }];
     }
     
 }
 
 - (void)showThirdTabelView:(BOOL)thirdTableViewShow{
+    CGFloat TableViewW = self.cellHeight*self.dataSourceThird.count;
+    CGFloat MaxHeigth = self.tableViewMaxHeight ? self.tableViewMaxHeight : tableViewMaxHeightDefalut;
+    if (TableViewW > MaxHeigth) {
+        self.tableThird.scrollEnabled = YES;
+        TableViewW = MaxHeigth;
+    }
     if (self.thirdTableViewShow == YES) {
         [self showCarverView];
         [UIView animateWithDuration:0.2 animations:^{
-            self.tableThird.frame = CGRectMake(CGRectGetMaxX(self.tableSecond.frame), CGRectGetMaxY(self.backView.frame), self.tableViewWith, self.cellHeight*self.dataSourceThird.count);
+            self.tableThird.frame = CGRectMake(CGRectGetMaxX(self.tableSecond.frame), CGRectGetMaxY(self.backView.frame), self.tableViewWith, TableViewW);
         }];
     }else{
         [self showCarverView];
         self.thirdTableViewShow = YES;
         self.tableThird.frame = CGRectMake(CGRectGetMaxX(self.tableSecond.frame), CGRectGetMaxY(self.backView.frame), self.tableViewWith, 0);
         [UIView animateWithDuration:0.2 animations:^{
-            self.tableThird.frame = CGRectMake(CGRectGetMaxX(self.tableSecond.frame), CGRectGetMaxY(self.backView.frame),self.tableViewWith, self.cellHeight*self.dataSourceThird.count);
+            self.tableThird.frame = CGRectMake(CGRectGetMaxX(self.tableSecond.frame), CGRectGetMaxY(self.backView.frame),self.tableViewWith, TableViewW);
         }];
     }
     
@@ -406,8 +434,7 @@
 - (void)createTableViewFirst{
     
     
-    
-    self.tableFirst = [[UITableView alloc]initWithFrame:CGRectMake(0, CGRectGetMaxY(self.backView.frame),self.frame.size.width, 0) style:UITableViewStylePlain];
+    self.tableFirst = [[UITableView alloc]initWithFrame:CGRectMake(0, CGRectGetMaxY(self.backView.frame),self.frame.size.width, 20) style:UITableViewStylePlain];
     self.tableFirst.scrollEnabled = NO;
     self.tableFirst.delegate = self;
     self.tableFirst.dataSource = self;
@@ -684,25 +711,31 @@
 
 - (void)netShowCommentTable{
     NSInteger index = self.lastSelectedIndex;
+    CGFloat TableViewW = self.cellHeight*self.dataSourceFirst.count;
+    CGFloat MaxHeigth = self.tableViewMaxHeight ? self.tableViewMaxHeight : tableViewMaxHeightDefalut;
+    if (TableViewW > MaxHeigth) {
+        self.tableFirst.scrollEnabled = YES;
+        TableViewW = MaxHeigth;
+    }
     if (self.firstTableViewShow == NO) {
         [self showCarverView];
         CALayer *layer = self.bgLayers[index-100];
         layer.transform = CATransform3DMakeRotation(M_PI, 0, 0, 1);
         self.tableFirst.frame = CGRectMake(0, CGRectGetMaxY(self.backView.frame), self.tableViewWith, 0);
         [UIView animateWithDuration:0.2 animations:^{
-            self.tableFirst.frame = CGRectMake(0, CGRectGetMaxY(self.backView.frame), self.tableViewWith, self.cellHeight*self.dataSourceFirst.count);
+            self.tableFirst.frame = CGRectMake(0, CGRectGetMaxY(self.backView.frame), self.tableViewWith, TableViewW);
+        }completion:^(BOOL finished) {
         }];
     }else{
         CALayer *layer = self.bgLayers[index-100];
         layer.transform = CATransform3DMakeRotation(M_PI*2, 0, 0, 1);
         self.firstTableViewShow = NO;
-        self.tableFirst.frame = CGRectMake(0, CGRectGetMaxY(self.backView.frame), self.tableViewWith, self.cellHeight*self.dataSourceFirst.count);
+        self.tableFirst.frame = CGRectMake(0, CGRectGetMaxY(self.backView.frame), self.tableViewWith, TableViewW);
         [UIView animateWithDuration:0.2 animations:^{
             self.tableFirst.frame = CGRectMake(0, CGRectGetMaxY(self.backView.frame), self.tableViewWith, 0);
         }];
         self.secondTableViewShow = NO;
         [UIView animateWithDuration:0.2 animations:^{
-            
             self.tableSecond.frame = CGRectMake(self.tableViewWith, CGRectGetMaxY(self.backView.frame), self.tableViewWith, 0);
             self.tableThird.frame = CGRectMake(self.tableViewWith * 2, CGRectGetMaxY(self.backView.frame), self.tableViewWith, 0);
         }];
