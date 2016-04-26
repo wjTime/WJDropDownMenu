@@ -1,5 +1,6 @@
 # WJDropDownMenu
-fast dropdwon menu
+fast dropdwon menu 
+-------------支持cocoapods-----------
 效果图如下:
 
 ![ABC](http://g.recordit.co/zge0aMZwnU.gif)
