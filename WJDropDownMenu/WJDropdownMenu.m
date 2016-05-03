@@ -434,7 +434,7 @@
 - (void)createTableViewFirst{
     
     
-    self.tableFirst = [[UITableView alloc]initWithFrame:CGRectMake(0, CGRectGetMaxY(self.backView.frame),self.frame.size.width, 20) style:UITableViewStylePlain];
+    self.tableFirst = [[UITableView alloc]initWithFrame:CGRectMake(0, CGRectGetMaxY(self.backView.frame),self.frame.size.width, 0) style:UITableViewStylePlain];
     self.tableFirst.scrollEnabled = NO;
     self.tableFirst.delegate = self;
     self.tableFirst.dataSource = self;
