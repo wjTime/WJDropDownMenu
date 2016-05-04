@@ -17,8 +17,7 @@
     [self createTableView];
     
     //  平时工作需要有个下拉菜单，所以简单的封装了一个菜单功能，不需要遵循类似tableView的代理方法，直接导入数据就可以用，大家可以做一个参考使用,以下是demo，
-    //  如有任何bug、不足、功能不全之处请在github不上找我，我会第一时间回复并修正，github:https://github.com/wjTime/WJDropDownMenu.git 实时更新中...
-    
+    //  如有任何bug、不足、功能不全之处请在github不上找我或 QQ:576527857，我会第一时间回复并修正，github:https://github.com/wjTime/WJDropDownMenu.git 实时更新中...
     //  如果是有导航栏请清除自动适应设置
     self.automaticallyAdjustsScrollViewInsets = NO;
     
@@ -88,7 +87,7 @@
     [self.menu drawBackMenu];
 }
 
-#pragma mark -- 代理方法返回点击时对应的index
+#pragma mark -- 代理方法1 返回点击时对应的index
 
 - (void)menuCellDidSelected:(NSInteger)MenuTitleIndex firstIndex:(NSInteger)firstIndex secondIndex:(NSInteger)secondIndex thirdIndex:(NSInteger)thirdIndex{
     NSLog(@"菜单数:%ld      一级菜单数:%ld      二级子菜单数:%ld  三级子菜单:%ld",MenuTitleIndex,firstIndex,secondIndex,thirdIndex);
@@ -115,7 +114,7 @@
 };
 
 
-#pragma mark -- 代理方法返回点击时对应的内容
+#pragma mark -- 代理方法2 返回点击时对应的内容
 - (void)menuCellDidSelected:(NSString *)MenuTitle firstContent:(NSString *)firstContent secondContent:(NSString *)secondContent thirdContent:(NSString *)thirdContent{
     NSLog(@"菜单title:%@       一级菜单:%@         二级子菜单:%@    三级子菜单:%@",MenuTitle,firstContent,secondContent,thirdContent);
     
@@ -135,14 +134,14 @@
     
 };
 
-#pragma mark -- 代理方法返回点击时对应的内容和index
+#pragma mark -- 代理方法3 返回点击时对应的内容和index(合并了方法1和方法2)
 - (void)menuCellDidSelected:(NSString *)MenuTitle menuIndex:(NSInteger)menuIndex firstContent:(NSString *)firstContent firstIndex:(NSInteger)firstIndex secondContent:(NSString *)secondContent secondIndex:(NSInteger)secondIndex thirdContent:(NSString *)thirdContent thirdIndex:(NSInteger)thirdIndex{
     NSLog(@"菜单title:%@  titleIndex:%ld,一级菜单:%@    一级菜单Index:%ld,     二级子菜单:%@   二级子菜单Index:%ld   三级子菜单:%@  三级子菜单Index:%ld",MenuTitle,menuIndex,firstContent,firstIndex,secondContent,secondIndex,thirdContent,thirdIndex);
 }
 
+// ------------------------------------------  以下是网络点击联动的代理方法可在此一级一级的导入数据，测试方法请打开 if 0 -------------------
 
-
-#if 0
+#if 1
 
 #pragma mark -- net网络获取数据代理方法返回点击时菜单对应的index(导入子菜单数据)
 - (void)netMenuClickMenuIndex:(NSInteger)menuIndex menuTitle:(NSString *)menuTitle{
@@ -209,9 +208,10 @@
 }
 
 
-
-
 #endif
+
+
+
 
 #pragma mark -- tableview
 
