@@ -9,7 +9,7 @@
 #define tableViewMaxHeightDefalut  300
 #define menuTitleDefalutFont  [UIFont systemFontOfSize:12]
 #define TableTitleDefalutFont [UIFont systemFontOfSize:10]
-
+#define menuButtonDefalutTag         700
 
 #import "WJDropdownMenu.h"
 #import <UIKit/UIKit.h>
@@ -217,7 +217,8 @@
     for (int i = 0; i < num; i++) {
         UIButton *btn = [[UIButton alloc]initWithFrame:CGRectMake((btnW+1)*i, 0, btnW, self.menuBaseHeight)];
         btn.backgroundColor = [UIColor whiteColor];
-        btn.tag = 100+i;
+        NSInteger tempTag = self.menuButtonTag ? self.menuButtonTag :menuButtonDefalutTag;
+        btn.tag = tempTag+i;
         btn.titleLabel.font = self.menuTitleFont ? [UIFont systemFontOfSize:self.menuTitleFont] : menuTitleDefalutFont;
         [btn setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
         [btn setTitle:data[i] forState:UIControlStateNormal];

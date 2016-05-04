@@ -76,6 +76,9 @@ typedef enum:NSInteger{
 /** 下拉的Tableview最大高度(超出高度可以滑动显示) */
 @property (nonatomic,assign)CGFloat tableViewMaxHeight;
 
+/** 自定义tag值防止和页面其他tag有冲突 */
+@property (nonatomic,assign)NSInteger menuButtonTag;
+
 /** 设置代理 */
 @property (nonatomic,assign) id<WJMenuDelegate>delegate;
 
