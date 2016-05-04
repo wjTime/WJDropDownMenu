@@ -142,7 +142,7 @@
 
 // ------------------------------------------  以下是网络点击联动的代理方法可在此一级一级的导入数据，测试方法请打开 if 0 -------------------
 
-#if 1
+#if 0
 
 #pragma mark -- net网络获取数据代理方法返回点击时菜单对应的index(导入子菜单数据)
 - (void)netMenuClickMenuIndex:(NSInteger)menuIndex menuTitle:(NSString *)menuTitle{

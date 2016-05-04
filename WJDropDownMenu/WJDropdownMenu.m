@@ -1,5 +1,6 @@
 
 // 如有任何bug、不足、功能不全之处请在github不上找我，我会第一时间回复并修正
+// QQ微信:576527857
 // github:https://github.com/wjTime/WJDropDownMenu.git 实时更新中...
 
 
@@ -25,8 +26,6 @@
 @property (nonatomic,strong) UITableView    *tableSecond;
 @property (nonatomic,strong) UITableView    *tableThird;
 
-
-
 @property (nonatomic,strong) NSMutableArray *bgLayers;
 @property (nonatomic,strong) NSMutableArray *dataSourceFirst;
 @property (nonatomic,strong) NSMutableArray *dataSourceSecond;
@@ -35,7 +34,6 @@
 @property (nonatomic,strong) NSMutableArray *data;
 @property (nonatomic,strong) NSMutableArray *allData;
 @property (nonatomic,strong) NSMutableArray *allDataSource;
-
 
 @property (nonatomic,assign) BOOL           firstTableViewShow;
 @property (nonatomic,assign) BOOL           secondTableViewShow;
@@ -48,12 +46,10 @@
 @property (nonatomic,assign) CGFloat        tableViewWith;
 @property (nonatomic,assign) CGFloat        menuBaseHeight;
 
-
-@property (nonatomic,assign) BOOL            isNet;
+@property (nonatomic,assign) BOOL           isNet;
 
 
 @end
-
 
 
 @implementation WJDropdownMenu
