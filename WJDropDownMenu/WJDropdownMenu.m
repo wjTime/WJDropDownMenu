@@ -557,10 +557,13 @@
                               andSecondContent:weakSelf.dataSourceSecond[indexPath.row]];
             }
             if (_delegate && [_delegate respondsToSelector:@selector(menuCellDidSelected:firstIndex:secondIndex:thirdIndex:)]) {
-                [_delegate menuCellDidSelected:weakSelf.lastSelectedIndex-100 firstIndex:weakSelf.lastSelectedCellIndex secondIndex:indexPath.row thirdIndex:0];
+                [_delegate menuCellDidSelected:weakSelf.lastSelectedIndex-100 firstIndex:weakSelf.lastSelectedCellIndex secondIndex:indexPath.row thirdIndex:-1];
             }
             if (_delegate && [_delegate respondsToSelector:@selector(menuCellDidSelected:firstContent:secondContent:thirdContent:)]) {
                 [_delegate menuCellDidSelected:weakSelf.dataSourceSecond[indexPath.row] firstContent:weakSelf.dataSourceFirst[weakSelf.lastSelectedCellIndex] secondContent:weakSelf.dataSourceSecond[indexPath.row] thirdContent:nil];
+            }
+            if (_delegate && [_delegate respondsToSelector:@selector(menuCellDidSelected:menuIndex:firstContent:firstIndex:secondContent:secondIndex:thirdContent:thirdIndex:)]) {
+                [_delegate menuCellDidSelected:weakSelf.dataSourceSecond[indexPath.row] menuIndex:weakSelf.lastSelectedIndex-100 firstContent:weakSelf.dataSourceFirst[weakSelf.lastSelectedCellIndex] firstIndex:weakSelf.lastSelectedCellIndex secondContent:weakSelf.dataSourceSecond[indexPath.row] secondIndex:indexPath.row thirdContent:nil thirdIndex:-1];
             }
             
         }
@@ -578,6 +581,9 @@
             if (_delegate && [_delegate respondsToSelector:@selector(menuCellDidSelected:firstContent:secondContent:thirdContent:)]) {
                 [_delegate menuCellDidSelected:weakSelf.dataSourceFirst[indexPath.row] firstContent:weakSelf.dataSourceFirst[indexPath.row] secondContent:nil thirdContent:nil];
             }
+            if (_delegate && [_delegate respondsToSelector:@selector(menuCellDidSelected:menuIndex:firstContent:firstIndex:secondContent:secondIndex:thirdContent:thirdIndex:)]) {
+                [_delegate menuCellDidSelected:weakSelf.dataSourceFirst[indexPath.row] menuIndex:weakSelf.lastSelectedIndex-100 firstContent:weakSelf.dataSourceFirst[indexPath.row] firstIndex:indexPath.row secondContent:nil secondIndex:-1 thirdContent:nil thirdIndex:-1];
+            }
             
         }
         if (weakSelf.dataSourceSecond && weakSelf.dataSourceThird) {
@@ -593,10 +599,13 @@
                               andSecondContent:weakSelf.dataSourceSecond[weakSelf.lastSecondCellIndex]];
             }
             if (_delegate && [_delegate respondsToSelector:@selector(menuCellDidSelected:firstIndex:secondIndex:thirdIndex:)]) {
-                [_delegate menuCellDidSelected:weakSelf.lastSelectedIndex-100 firstIndex:weakSelf.lastSelectedCellIndex secondIndex:self.lastSecondCellIndex thirdIndex:indexPath.row];
+                [_delegate menuCellDidSelected:weakSelf.lastSelectedIndex-100 firstIndex:weakSelf.lastSelectedCellIndex secondIndex:weakSelf.lastSecondCellIndex thirdIndex:indexPath.row];
             }
             if (_delegate && [_delegate respondsToSelector:@selector(menuCellDidSelected:firstContent:secondContent:thirdContent:)]) {
                 [_delegate menuCellDidSelected:weakSelf.dataSourceThird[indexPath.row] firstContent:weakSelf.dataSourceFirst[weakSelf.lastSelectedCellIndex] secondContent:weakSelf.dataSourceSecond[weakSelf.lastSecondCellIndex] thirdContent:weakSelf.dataSourceThird[indexPath.row]];
+            }
+            if (_delegate && [_delegate respondsToSelector:@selector(menuCellDidSelected:menuIndex:firstContent:firstIndex:secondContent:secondIndex:thirdContent:thirdIndex:)]) {
+                [_delegate menuCellDidSelected:weakSelf.dataSourceThird[indexPath.row] menuIndex:weakSelf.lastSelectedIndex-100 firstContent:weakSelf.dataSourceFirst[weakSelf.lastSelectedCellIndex] firstIndex:weakSelf.lastSelectedCellIndex secondContent:weakSelf.dataSourceSecond[weakSelf.lastSecondCellIndex] secondIndex:weakSelf.lastSecondCellIndex thirdContent:weakSelf.dataSourceThird[indexPath.row]thirdIndex:indexPath.row];
             }
         }
         weakSelf.allData = nil;

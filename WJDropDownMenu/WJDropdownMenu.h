@@ -28,6 +28,10 @@ typedef enum:NSInteger{
 /** 代理方法返回 菜单标题:MenuTitle  一级菜单内容:firstContent 二级菜单内容:secondContent  三级菜单内容:thirdContent */
 - (void)menuCellDidSelected:(NSString *)MenuTitle firstContent:(NSString *)firstContent secondContent:(NSString *)secondContent thirdContent:(NSString *)thirdContent;
 
+/** 代理方法返回 菜单标题:MenuTitle  菜单标题index:MenuTitleIndex 一级菜单内容:firstContent 一级菜单index:firstIndex 二级菜单内容:secondContent 二级菜单index:secondIndex  三级菜单内容:thirdContent  三级菜单index:thirdIndex (返回的内容和index在一个代理方法中) */
+- (void)menuCellDidSelected:(NSString *)MenuTitle menuIndex:(NSInteger)menuIndex firstContent:(NSString *)firstContent firstIndex:(NSInteger)firstIndex secondContent:(NSString *)secondContent secondIndex:(NSInteger)secondIndex thirdContent:(NSString *)thirdContent thirdIndex:(NSInteger)thirdIndex;
+
+
 
 #pragma mark -- net一级一级点击网络获取数据的代理方法（在此代理方法中调用 netLoad 开头的方法 导入一级一级网络请求返回的数据）
 
@@ -36,6 +40,9 @@ typedef enum:NSInteger{
 
 /** net代理方法返回 菜单标题index:MenuTitleIndex 菜单标题:MenuTitle  一级菜单内容:firstContent  一级菜单内容:firstContent */
 - (void)netMenuClickMenuIndex:(NSInteger)menuIndex menuTitle:(NSString *)menuTitle FirstIndex:(NSInteger)FirstIndex firstContent:(NSString *)firstContent;
+
+
+
 
 @end
 

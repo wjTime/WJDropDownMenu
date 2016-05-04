@@ -135,6 +135,13 @@
     
 };
 
+#pragma mark -- 代理方法返回点击时对应的内容和index
+- (void)menuCellDidSelected:(NSString *)MenuTitle menuIndex:(NSInteger)menuIndex firstContent:(NSString *)firstContent firstIndex:(NSInteger)firstIndex secondContent:(NSString *)secondContent secondIndex:(NSInteger)secondIndex thirdContent:(NSString *)thirdContent thirdIndex:(NSInteger)thirdIndex{
+    NSLog(@"菜单title:%@  titleIndex:%ld,一级菜单:%@    一级菜单Index:%ld,     二级子菜单:%@   二级子菜单Index:%ld   三级子菜单:%@  三级子菜单Index:%ld",MenuTitle,menuIndex,firstContent,firstIndex,secondContent,secondIndex,thirdContent,thirdIndex);
+}
+
+
+
 #if 0
 
 #pragma mark -- net网络获取数据代理方法返回点击时菜单对应的index(导入子菜单数据)
@@ -200,6 +207,10 @@
         
     });
 }
+
+
+
+
 #endif
 
 #pragma mark -- tableview
