@@ -30,7 +30,7 @@
     self.menu = menu;
     
     // 设置属性(可不设置)
-    menu.caverAnimationTime = 0.5;             //  增加了展开动画时间设置   不设置默认是  0.15
+    menu.caverAnimationTime = 0.2;             //  增加了展开动画时间设置   不设置默认是  0.15
     menu.hideAnimationTime = 0.2;              //  增加了缩进动画时间设置   不设置默认是  0.15
     menu.menuTitleFont = 12;                   //  设置menuTitle字体大小    不设置默认是  11
     menu.tableTitleFont = 11;                  //  设置tableTitle字体大小   不设置默认是  10
