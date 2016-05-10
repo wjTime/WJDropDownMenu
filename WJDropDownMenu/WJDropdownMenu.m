@@ -4,19 +4,19 @@
 // github:https://github.com/wjTime/WJDropDownMenu.git 实时更新中...
 
 
-#define cell_h   40
+#define cell_h                      40
+#define carverAnimationDefalutTime  0.15
+#define hideAnimationDefalutTime    0.15
+#define tableViewMaxHeightDefalut   300
+#define menuButtonDefalutTag        700
+
 #define window_h [UIScreen mainScreen].bounds.size.height
-#define carverAnimationDefalutTime 0.15
-#define tableViewMaxHeightDefalut  300
 #define menuTitleDefalutFont  [UIFont systemFontOfSize:12]
 #define TableTitleDefalutFont [UIFont systemFontOfSize:10]
-#define menuButtonDefalutTag         700
+
 
 #import "WJDropdownMenu.h"
 #import <UIKit/UIKit.h>
-
-
-
 
 
 @interface WJDropdownMenu ()
@@ -176,15 +176,15 @@
     layer.transform = CATransform3DMakeRotation(M_PI*2, 0, 0, 1);
     
     self.firstTableViewShow = NO;
-    [UIView animateWithDuration:0.2 animations:^{
+    [UIView animateWithDuration:self.hideAnimationTime animations:^{
         self.tableFirst.frame = CGRectMake(0, CGRectGetMaxY(self.backView.frame), self.tableViewWith, 0);
     }];
     self.secondTableViewShow = NO;
-    [UIView animateWithDuration:0.2 animations:^{
+    [UIView animateWithDuration:self.hideAnimationTime animations:^{
         self.tableSecond.frame = CGRectMake(self.tableViewWith,CGRectGetMaxY(self.backView.frame), self.tableViewWith, 0);
     }];
     self.thirdTableViewShow = NO;
-    [UIView animateWithDuration:0.2 animations:^{
+    [UIView animateWithDuration:self.hideAnimationTime animations:^{
         self.tableThird.frame = CGRectMake(self.tableViewWith * 2,CGRectGetMaxY(self.backView.frame), self.tableViewWith, 0);
     }];
     
@@ -193,7 +193,11 @@
     
 }
 - (void)createMenuViewWithData:(NSArray *)data{
+
+    self.caverAnimationTime = self.caverAnimationTime ? self.caverAnimationTime : carverAnimationDefalutTime;
+    self.hideAnimationTime = self.hideAnimationTime ? self.hideAnimationTime : hideAnimationDefalutTime;
     self.cellHeight = self.cellHeight ? self.cellHeight : cell_h;
+    
     self.lastSelectedIndex = -1;
     self.backgroundColor = self.CarverViewColor ? self.CarverViewColor : [UIColor colorWithRed:0.7 green:0.7 blue:0.7 alpha:0.5];
     self.frame = CGRectMake(self.frame.origin.x, self.frame.origin.y, self.frame.size.width
@@ -269,7 +273,7 @@
             CALayer *layer = self.bgLayers[index-100];
             layer.transform = CATransform3DMakeRotation(M_PI, 0, 0, 1);
             self.tableFirst.frame = CGRectMake(0, CGRectGetMaxY(self.backView.frame), self.tableViewWith, 0);
-            [UIView animateWithDuration:0.2 animations:^{
+            [UIView animateWithDuration:self.caverAnimationTime animations:^{
             self.tableFirst.frame = CGRectMake(0, CGRectGetMaxY(self.backView.frame), self.tableViewWith, TableViewW);
             }completion:^(BOOL finished) {
             }];
@@ -278,11 +282,11 @@
             layer.transform = CATransform3DMakeRotation(M_PI*2, 0, 0, 1);
             self.firstTableViewShow = NO;
             self.tableFirst.frame = CGRectMake(0, CGRectGetMaxY(self.backView.frame), self.tableViewWith, TableViewW);
-            [UIView animateWithDuration:0.2 animations:^{
+            [UIView animateWithDuration:self.hideAnimationTime animations:^{
                 self.tableFirst.frame = CGRectMake(0, CGRectGetMaxY(self.backView.frame), self.tableViewWith, 0);
             }];
             self.secondTableViewShow = NO;
-            [UIView animateWithDuration:0.2 animations:^{
+            [UIView animateWithDuration:self.hideAnimationTime animations:^{
                 self.tableSecond.frame = CGRectMake(self.tableViewWith, CGRectGetMaxY(self.backView.frame), self.tableViewWith, 0);
                 self.tableThird.frame = CGRectMake(self.tableViewWith * 2, CGRectGetMaxY(self.backView.frame), self.tableViewWith, 0);
             }];
@@ -309,9 +313,7 @@
 }
 - (void)showCarverView{
     self.firstTableViewShow = YES;
-    if (!self.caverAnimationTime) {
-        self.caverAnimationTime = carverAnimationDefalutTime;
-    }
+    
     self.frame = CGRectMake(self.frame.origin.x, self.frame.origin.y, self.frame.size.width
                             , window_h-self.frame.origin.y);
     [UIView animateWithDuration:self.caverAnimationTime animations:^{
@@ -321,9 +323,7 @@
 }
 - (void)hideCarverView{
     self.firstTableViewShow = NO;
-    if (!self.caverAnimationTime) {
-        self.caverAnimationTime = carverAnimationDefalutTime;
-    }
+    
     self.frame = CGRectMake(self.frame.origin.x, self.frame.origin.y, self.frame.size.width
                             , self.menuBaseHeight);
     [UIView animateWithDuration:self.caverAnimationTime animations:^{
@@ -342,7 +342,7 @@
         CALayer *layer = self.bgLayers[self.lastSelectedIndex-100];
         layer.transform = CATransform3DMakeRotation(M_PI*2, 0, 0, 1);
         
-        [UIView animateWithDuration:0.1 animations:^{
+        [UIView animateWithDuration:self.hideAnimationTime/2 animations:^{
             
             self.tableFirst.frame = CGRectMake(0, CGRectGetMaxY(self.backView.frame), self.tableViewWith, 0);
             self.tableSecond.frame = CGRectMake(self.tableViewWith, CGRectGetMaxY(self.backView.frame), self.tableViewWith, 0);
@@ -373,14 +373,14 @@
     }
     if (self.secondTableViewShow == YES) {
         [self showCarverView];
-        [UIView animateWithDuration:0.2 animations:^{
+        [UIView animateWithDuration:self.caverAnimationTime animations:^{
             self.tableSecond.frame = CGRectMake(self.tableViewWith, CGRectGetMaxY(self.backView.frame), self.tableViewWith, TableViewW);
         }];
     }else{
         [self showCarverView];
         self.secondTableViewShow = YES;
         self.tableSecond.frame = CGRectMake(self.tableViewWith, CGRectGetMaxY(self.backView.frame), self.tableViewWith, 0);
-        [UIView animateWithDuration:0.2 animations:^{
+        [UIView animateWithDuration:self.caverAnimationTime animations:^{
             self.tableSecond.frame = CGRectMake(self.tableViewWith, CGRectGetMaxY(self.backView.frame),self.tableViewWith, TableViewW);
         }];
     }
@@ -398,14 +398,14 @@
     }
     if (self.thirdTableViewShow == YES) {
         [self showCarverView];
-        [UIView animateWithDuration:0.2 animations:^{
+        [UIView animateWithDuration:self.caverAnimationTime animations:^{
             self.tableThird.frame = CGRectMake(CGRectGetMaxX(self.tableSecond.frame), CGRectGetMaxY(self.backView.frame), self.tableViewWith, TableViewW);
         }];
     }else{
         [self showCarverView];
         self.thirdTableViewShow = YES;
         self.tableThird.frame = CGRectMake(CGRectGetMaxX(self.tableSecond.frame), CGRectGetMaxY(self.backView.frame), self.tableViewWith, 0);
-        [UIView animateWithDuration:0.2 animations:^{
+        [UIView animateWithDuration:self.caverAnimationTime animations:^{
             self.tableThird.frame = CGRectMake(CGRectGetMaxX(self.tableSecond.frame), CGRectGetMaxY(self.backView.frame),self.tableViewWith, TableViewW);
         }];
     }
@@ -529,15 +529,15 @@
         layer.transform = CATransform3DMakeRotation(M_PI*2, 0, 0, 1);
         UIButton *btn = (id)[self viewWithTag:weakSelf.lastSelectedIndex];
         weakSelf.firstTableViewShow = NO;
-        [UIView animateWithDuration:0.2 animations:^{
+        [UIView animateWithDuration:self.hideAnimationTime animations:^{
             weakSelf.tableFirst.frame = CGRectMake(0, CGRectGetMaxY(weakSelf.backView.frame), self.tableViewWith, 0);
         }];
         weakSelf.secondTableViewShow = NO;
-        [UIView animateWithDuration:0.2 animations:^{
+        [UIView animateWithDuration:self.hideAnimationTime animations:^{
             weakSelf.tableSecond.frame = CGRectMake(self.tableViewWith,CGRectGetMaxY(self.backView.frame), self.tableViewWith, 0);
         }];
         weakSelf.thirdTableViewShow = NO;
-        [UIView animateWithDuration:0.2 animations:^{
+        [UIView animateWithDuration:self.hideAnimationTime animations:^{
             weakSelf.tableThird.frame = CGRectMake(self.tableViewWith * 2,CGRectGetMaxY(self.backView.frame), self.tableViewWith, 0);
         }];
         [weakSelf hideCarverView];
@@ -664,19 +664,19 @@
 #pragma mark -- net
 
 - (void)netHideTable{
-
+    
     CALayer *layer = self.bgLayers[self.lastSelectedIndex-100];
     layer.transform = CATransform3DMakeRotation(M_PI*2, 0, 0, 1);
     self.firstTableViewShow = NO;
-    [UIView animateWithDuration:0.2 animations:^{
+    [UIView animateWithDuration:self.hideAnimationTime animations:^{
         self.tableFirst.frame = CGRectMake(0, CGRectGetMaxY(self.backView.frame), self.tableViewWith, 0);
     }];
     self.secondTableViewShow = NO;
-    [UIView animateWithDuration:0.2 animations:^{
+    [UIView animateWithDuration:self.hideAnimationTime animations:^{
         self.tableSecond.frame = CGRectMake(self.tableViewWith,CGRectGetMaxY(self.backView.frame), self.tableViewWith, 0);
     }];
     self.thirdTableViewShow = NO;
-    [UIView animateWithDuration:0.2 animations:^{
+    [UIView animateWithDuration:self.hideAnimationTime animations:^{
         self.tableThird.frame = CGRectMake(self.tableViewWith * 2,CGRectGetMaxY(self.backView.frame), self.tableViewWith, 0);
     }];
     [self hideCarverView];
@@ -730,7 +730,7 @@
         CALayer *layer = self.bgLayers[index-100];
         layer.transform = CATransform3DMakeRotation(M_PI, 0, 0, 1);
         self.tableFirst.frame = CGRectMake(0, CGRectGetMaxY(self.backView.frame), self.tableViewWith, 0);
-        [UIView animateWithDuration:0.2 animations:^{
+        [UIView animateWithDuration:self.caverAnimationTime animations:^{
             self.tableFirst.frame = CGRectMake(0, CGRectGetMaxY(self.backView.frame), self.tableViewWith, TableViewW);
         }completion:^(BOOL finished) {
         }];
@@ -739,11 +739,11 @@
         layer.transform = CATransform3DMakeRotation(M_PI*2, 0, 0, 1);
         self.firstTableViewShow = NO;
         self.tableFirst.frame = CGRectMake(0, CGRectGetMaxY(self.backView.frame), self.tableViewWith, TableViewW);
-        [UIView animateWithDuration:0.2 animations:^{
+        [UIView animateWithDuration:self.hideAnimationTime animations:^{
             self.tableFirst.frame = CGRectMake(0, CGRectGetMaxY(self.backView.frame), self.tableViewWith, 0);
         }];
         self.secondTableViewShow = NO;
-        [UIView animateWithDuration:0.2 animations:^{
+        [UIView animateWithDuration:self.hideAnimationTime animations:^{
             self.tableSecond.frame = CGRectMake(self.tableViewWith, CGRectGetMaxY(self.backView.frame), self.tableViewWith, 0);
             self.tableThird.frame = CGRectMake(self.tableViewWith * 2, CGRectGetMaxY(self.backView.frame), self.tableViewWith, 0);
         }];

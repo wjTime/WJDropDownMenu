@@ -58,6 +58,9 @@ typedef enum:NSInteger{
 /** 遮盖的动画时间 */
 @property (nonatomic,assign)CGFloat caverAnimationTime;
 
+/** 缩进的动画时间 */
+@property (nonatomic,assign)CGFloat hideAnimationTime;
+
 /** 菜单title的字体大小 */
 @property (nonatomic,assign)CGFloat menuTitleFont;
 
