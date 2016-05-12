@@ -61,8 +61,7 @@
     [self createMenuViewWithData:menuTitleArray];
     [self.allDataSource addObject:FirstArray];
     
-    [self createTableViewFirst];
-    [self createTableViewSecond];
+    [self createThreeTableView];
 }
 - (void)createTwoMenuTitleArray:(NSArray *)menuTitleArray FirstArr:(NSArray *)firstArr SecondArr:(NSArray *)secondArr{
     self.menuBaseHeight = self.frame.size.height;
@@ -70,8 +69,7 @@
     [self.allDataSource addObject:firstArr];
     [self.allDataSource addObject:secondArr];
     
-    [self createTableViewFirst];
-    [self createTableViewSecond];
+    [self createThreeTableView];
     
 }
 
@@ -82,10 +80,15 @@
     [self.allDataSource addObject:secondArr];
     [self.allDataSource addObject:threeArr];
     
+    [self createThreeTableView];
+    
+}
+
+- (void)createThreeTableView{
+    
     [self createTableViewFirst];
     [self createTableViewSecond];
     [self createTableViewThird];
-    
 }
 
 - (void)createFourMenuTitleArray:(NSArray *)menuTitleArray FirstArr:(NSArray *)firstArr SecondArr:(NSArray *)secondArr threeArr:(NSArray *)threeArr fourArr:(NSArray *)fourArr{
