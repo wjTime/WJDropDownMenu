@@ -7,6 +7,7 @@
 @property (nonatomic,weak)UITableView *tableView;
 @property (nonatomic,weak)WJDropdownMenu *menu;
 
+
 @end
 
 @implementation ViewController
@@ -50,9 +51,12 @@
     // 设置rightItem点击收缩menu
     [self createRightNav];
     
-    
+
+
     
 }
+
+
 
 - (void)createAllMenuData{
     NSArray *threeMenuTitleArray =  @[@"菜单A",@"菜单B",@"菜单C"];
@@ -93,41 +97,16 @@
 
 - (void)menuCellDidSelected:(NSInteger)MenuTitleIndex firstIndex:(NSInteger)firstIndex secondIndex:(NSInteger)secondIndex thirdIndex:(NSInteger)thirdIndex{
     NSLog(@"菜单数:%ld      一级菜单数:%ld      二级子菜单数:%ld  三级子菜单:%ld",MenuTitleIndex,firstIndex,secondIndex,thirdIndex);
-    
-    UILabel *label = [[UILabel alloc]initWithFrame:CGRectMake(0, self.view.frame.size.height-40, self.view.frame.size.width, 40)];
-    label.backgroundColor = [UIColor lightGrayColor];
-    label.font = [UIFont systemFontOfSize:10];
-    label.text = [NSString stringWithFormat:@"菜单数:%ld,  一级菜单数:%ld,   二级子菜单数:%ld  三级菜单:%ld",MenuTitleIndex,firstIndex,secondIndex,thirdIndex];
-    label.numberOfLines = 2;
-    label.lineBreakMode = NSLineBreakByCharWrapping;
-    [self.view addSubview:label];
-    
-    UILabel *label2 = [[UILabel alloc]initWithFrame:CGRectMake(0, self.view.frame.size.height-122-100, self.view.frame.size.width, 40+100)];
-    label2.backgroundColor = [UIColor lightGrayColor];
-    label2.font = [UIFont systemFontOfSize:15];
-    label2.numberOfLines = 0;
-    label2.lineBreakMode = NSLineBreakByCharWrapping;
-    label2.textColor = [UIColor redColor];
-    //label2.text = @"此方法是新增的net网络点击加载数据，即子菜单的数据还没有出来，需要点击上级带单时加载网络请求后返回数据再导入一级一级联动的效果，因此模拟了网络加载延迟的效果";
-    label2.text = @"第一种方法返回的结果:";
-    [self.view addSubview:label2];
-    
-    
+
 };
 
 
 #pragma mark -- 代理方法2 返回点击时对应的内容
 - (void)menuCellDidSelected:(NSString *)MenuTitle firstContent:(NSString *)firstContent secondContent:(NSString *)secondContent thirdContent:(NSString *)thirdContent{
+    
     NSLog(@"菜单title:%@       一级菜单:%@         二级子菜单:%@    三级子菜单:%@",MenuTitle,firstContent,secondContent,thirdContent);
     
-    UILabel *label = [[UILabel alloc]initWithFrame:CGRectMake(0, self.view.frame.size.height-81, self.view.frame.size.width, 40)];
-    label.backgroundColor = [UIColor lightGrayColor];
-    label.font = [UIFont systemFontOfSize:10];
-    label.numberOfLines = 2;
-    label.lineBreakMode = NSLineBreakByCharWrapping;
-    label.text = [NSString stringWithFormat:@"菜单title:%@,  一级菜单:%@,   二级子菜单:%@   三级子菜单:%@",MenuTitle,firstContent,secondContent,thirdContent];
-    [self.view addSubview:label];
-    
+
     self.data = [NSMutableArray array];
     [self.data addObject:[NSString stringWithFormat:@"%@ 的 detail data 1",secondContent]];
     [self.data addObject:[NSString stringWithFormat:@"%@ 的 detail data 2",secondContent]];
@@ -237,6 +216,12 @@
     cell.textLabel.font = [UIFont systemFontOfSize:12];
     return cell;
 }
+
+
+- (void)dealloc{
+    NSLog(@"dealloc");
+}
+
 
 
 - (void)didReceiveMemoryWarning {

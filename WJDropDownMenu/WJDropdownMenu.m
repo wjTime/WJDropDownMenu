@@ -530,20 +530,20 @@
 
     __weak typeof(self)weakSelf = self;
     void (^complete)(void) = ^(void){
-        CALayer *layer = self.bgLayers[weakSelf.lastSelectedIndex-100];
+        CALayer *layer = weakSelf.bgLayers[weakSelf.lastSelectedIndex-100];
         layer.transform = CATransform3DMakeRotation(M_PI*2, 0, 0, 1);
-        UIButton *btn = (id)[self viewWithTag:weakSelf.lastSelectedIndex];
+        UIButton *btn = (id)[weakSelf viewWithTag:weakSelf.lastSelectedIndex];
         weakSelf.firstTableViewShow = NO;
         [UIView animateWithDuration:self.hideAnimationTime animations:^{
-            weakSelf.tableFirst.frame = CGRectMake(0, CGRectGetMaxY(weakSelf.backView.frame), self.tableViewWith, 0);
+            weakSelf.tableFirst.frame = CGRectMake(0, CGRectGetMaxY(weakSelf.backView.frame), weakSelf.tableViewWith, 0);
         }];
         weakSelf.secondTableViewShow = NO;
-        [UIView animateWithDuration:self.hideAnimationTime animations:^{
-            weakSelf.tableSecond.frame = CGRectMake(self.tableViewWith,CGRectGetMaxY(self.backView.frame), self.tableViewWith, 0);
+        [UIView animateWithDuration:weakSelf.hideAnimationTime animations:^{
+            weakSelf.tableSecond.frame = CGRectMake(weakSelf.tableViewWith,CGRectGetMaxY(weakSelf.backView.frame), weakSelf.tableViewWith, 0);
         }];
         weakSelf.thirdTableViewShow = NO;
-        [UIView animateWithDuration:self.hideAnimationTime animations:^{
-            weakSelf.tableThird.frame = CGRectMake(self.tableViewWith * 2,CGRectGetMaxY(self.backView.frame), self.tableViewWith, 0);
+        [UIView animateWithDuration:weakSelf.hideAnimationTime animations:^{
+            weakSelf.tableThird.frame = CGRectMake(weakSelf.tableViewWith * 2,CGRectGetMaxY(weakSelf.backView.frame), weakSelf.tableViewWith, 0);
         }];
         [weakSelf hideCarverView];
         if (weakSelf.dataSourceSecond && !weakSelf.dataSourceThird) {
