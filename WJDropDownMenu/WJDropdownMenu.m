@@ -42,6 +42,7 @@
 @property (nonatomic,assign) NSInteger      lastSelectedIndex;
 @property (nonatomic,assign) NSInteger      lastSelectedCellIndex;
 @property (nonatomic,assign) NSInteger      lastSecondCellIndex;
+@property (nonatomic,assign) NSInteger      num;
 
 @property (nonatomic,assign) CGFloat        tableViewWith;
 @property (nonatomic,assign) CGFloat        menuBaseHeight;
@@ -83,6 +84,7 @@
     [self createThreeTableView];
     
 }
+
 
 - (void)createThreeTableView{
     
@@ -628,6 +630,10 @@
             if (self.allData) {
                 
                 self.dataSourceSecond = self.allData[i];
+                self.num = 0;
+                for (int j = 0; j < i; j++) {
+                    self.num += [self.allData[j] count];
+                }
                 [self.tableSecond reloadData];
                 [self showSecondTabelView:self.secondTableViewShow];
                 
@@ -640,7 +646,7 @@
         if (self.data) {
             NSInteger i = indexPath.row;
             self.lastSecondCellIndex = indexPath.row;
-            self.dataSourceThird = self.data[i];
+            self.dataSourceThird = self.data[self.num + i];
             [self.tableThird reloadData];
             [self showThirdTabelView:self.thirdTableViewShow];
         }else{
