@@ -17,6 +17,7 @@
     self.title = @"WJDropdownMenu";
     [self createTableView];
     
+    
     //  平时工作需要有个下拉菜单，所以简单的封装了一个菜单功能，不需要遵循类似tableView的代理方法，直接导入数据就可以用，大家可以做一个参考使用,以下是demo，
     //  如有任何bug、不足、功能不全之处请在github不上找我 或 QQ:576527857，我会第一时间回复并修正，github:https://github.com/wjTime/WJDropDownMenu.git 实时更新中...
     //  如果是有导航栏请清除自动适应设置
