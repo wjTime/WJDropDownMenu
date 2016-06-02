@@ -627,6 +627,7 @@
                 [_delegate netMenuClickMenuIndex:self.lastSelectedIndex-100 menuTitle:btn.titleLabel.text FirstIndex:i firstContent:self.dataSourceFirst[i]];
             }
         }else{
+            weakSelf.dataSourceSecond = nil;
             if (self.allData[i] != nil && self.allData[i] != NULL && [self.allData[i] count] != 0) {
                 self.dataSourceSecond = self.allData[i];
                 self.num = 0;
@@ -642,6 +643,7 @@
             }
         }
     }else if (tableView == self.tableSecond) {
+        weakSelf.dataSourceThird = nil;
         NSInteger i = indexPath.row;
         if (self.data[i] != nil && self.data[i] != NULL && [self.data[self.num + i] count] != 0) {
             self.lastSecondCellIndex = indexPath.row;
