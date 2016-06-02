@@ -572,13 +572,13 @@
         if (!weakSelf.dataSourceSecond && !weakSelf.dataSourceThird) {
             [btn setTitle:weakSelf.dataSourceFirst[indexPath.row] forState:UIControlStateNormal];
             if (_delegate && [_delegate respondsToSelector:@selector(menuCellDidSelected:firstIndex:andSecondIndex:)]) {
-                [_delegate menuCellDidSelected:weakSelf.lastSelectedIndex-100 firstIndex:indexPath.row andSecondIndex:0];
+                [_delegate menuCellDidSelected:weakSelf.lastSelectedIndex-100 firstIndex:indexPath.row andSecondIndex:-1];
             }
             if (_delegate && [_delegate respondsToSelector:@selector(menuCellDidSelected:firstContent:andSecondContent:)]) {
                 [_delegate menuCellDidSelected:weakSelf.dataSourceFirst[indexPath.row] firstContent:weakSelf.dataSourceFirst[indexPath.row] andSecondContent:nil];
             }
             if (_delegate && [_delegate respondsToSelector:@selector(menuCellDidSelected:firstIndex:secondIndex:thirdIndex:)]) {
-                [_delegate menuCellDidSelected:weakSelf.lastSelectedIndex-100 firstIndex:indexPath.row secondIndex:0 thirdIndex:0];
+                [_delegate menuCellDidSelected:weakSelf.lastSelectedIndex-100 firstIndex:indexPath.row secondIndex:-1 thirdIndex:-1];
             }
             if (_delegate && [_delegate respondsToSelector:@selector(menuCellDidSelected:firstContent:secondContent:thirdContent:)]) {
                 [_delegate menuCellDidSelected:weakSelf.dataSourceFirst[indexPath.row] firstContent:weakSelf.dataSourceFirst[indexPath.row] secondContent:nil thirdContent:nil];
