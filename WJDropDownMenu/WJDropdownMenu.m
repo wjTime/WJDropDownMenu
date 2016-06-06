@@ -177,7 +177,8 @@
     
 }
 - (void)remover{
-    CALayer *layer = self.bgLayers[self.lastSelectedIndex-100];
+     NSInteger tempTag = self.menuButtonTag ? self.menuButtonTag :menuButtonDefalutTag;
+    CALayer *layer = self.bgLayers[self.lastSelectedIndex-tempTag];
     layer.transform = CATransform3DMakeRotation(M_PI*2, 0, 0, 1);
     
     self.firstTableViewShow = NO;
@@ -225,7 +226,15 @@
         NSInteger tempTag = self.menuButtonTag ? self.menuButtonTag :menuButtonDefalutTag;
         btn.tag = tempTag+i;
         btn.titleLabel.font = self.menuTitleFont ? [UIFont systemFontOfSize:self.menuTitleFont] : menuTitleDefalutFont;
-        [btn setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+        
+        
+        UIColor *unSelectedColor = self.unSelectedColor ? self.unSelectedColor : [UIColor grayColor];
+        UIColor *selectedColor = self.selectedColor ? self.selectedColor : [UIColor blackColor];
+        
+        
+        [btn setTitleColor:unSelectedColor forState:UIControlStateNormal];
+        [btn setTitleColor:selectedColor forState:UIControlStateSelected];
+        
         [btn setTitle:data[i] forState:UIControlStateNormal];
         
         [btn addTarget:self action:@selector(showFirstTableView:) forControlEvents:UIControlEventTouchUpInside];
@@ -262,6 +271,7 @@
     [self.backView addSubview:VlineLbBom];
 }
 - (void)showFirstAndSecondTableView:(NSInteger)index{
+    NSInteger tempTag = self.menuButtonTag ? self.menuButtonTag :menuButtonDefalutTag;
     NSInteger templastSelecte = self.lastSelectedIndex;
     self.lastSelectedIndex = index;
     void(^compelte)() = ^{
@@ -275,7 +285,7 @@
         }
         if (self.firstTableViewShow == NO) {
             [self showCarverView];
-            CALayer *layer = self.bgLayers[index-100];
+            CALayer *layer = self.bgLayers[index-tempTag];
             layer.transform = CATransform3DMakeRotation(M_PI, 0, 0, 1);
             self.tableFirst.frame = CGRectMake(0, CGRectGetMaxY(self.backView.frame), self.tableViewWith, 0);
             [UIView animateWithDuration:self.caverAnimationTime animations:^{
@@ -283,7 +293,7 @@
             }completion:^(BOOL finished) {
             }];
         }else{
-            CALayer *layer = self.bgLayers[index-100];
+            CALayer *layer = self.bgLayers[index-tempTag];
             layer.transform = CATransform3DMakeRotation(M_PI*2, 0, 0, 1);
             self.firstTableViewShow = NO;
             self.tableFirst.frame = CGRectMake(0, CGRectGetMaxY(self.backView.frame), self.tableViewWith, TableViewW);
@@ -305,11 +315,11 @@
         }else{
             UIButton *btn = (UIButton *)[self viewWithTag:index];
             if (_delegate && [_delegate respondsToSelector:@selector(netMenuClickMenuIndex: menuTitle:)]) {
-                [_delegate netMenuClickMenuIndex:index - 100 menuTitle:btn.titleLabel.text];
+                [_delegate netMenuClickMenuIndex:index - tempTag menuTitle:btn.titleLabel.text];
             }
         }
     }else{
-        [self changeMenuDataWithIndex:index-100];
+        [self changeMenuDataWithIndex:index-tempTag];
         compelte();
     }
     
@@ -317,6 +327,10 @@
     
 }
 - (void)showCarverView{
+
+    UIButton *btn = (UIButton *)[self viewWithTag:self.lastSelectedIndex];
+    btn.selected = YES;
+    
     self.firstTableViewShow = YES;
     
     self.frame = CGRectMake(self.frame.origin.x, self.frame.origin.y, self.frame.size.width
@@ -327,6 +341,10 @@
     
 }
 - (void)hideCarverView{
+    
+    UIButton *btn = (UIButton *)[self viewWithTag:self.lastSelectedIndex];
+    btn.selected = NO;
+    
     self.firstTableViewShow = NO;
     
     self.frame = CGRectMake(self.frame.origin.x, self.frame.origin.y, self.frame.size.width
@@ -338,13 +356,19 @@
 }
 - (void)showFirstTableView:(UIButton *)btn{
     
+    NSInteger tempTag = self.menuButtonTag ? self.menuButtonTag :menuButtonDefalutTag;
     self.allData = nil;
     self.data = nil;
     self.dataSourceSecond = nil;
     self.dataSourceThird = nil;
     
     if (self.lastSelectedIndex != btn.tag && self.lastSelectedIndex !=-1) {
-        CALayer *layer = self.bgLayers[self.lastSelectedIndex-100];
+        
+        UIButton *TemBtn = (UIButton *)[self viewWithTag:self.lastSelectedIndex];
+        TemBtn.selected = NO;
+        
+        
+        CALayer *layer = self.bgLayers[self.lastSelectedIndex-tempTag];
         layer.transform = CATransform3DMakeRotation(M_PI*2, 0, 0, 1);
         
         [UIView animateWithDuration:self.hideAnimationTime/2 animations:^{
@@ -537,10 +561,11 @@
     return nil;
 }
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
+     NSInteger tempTag = self.menuButtonTag ? self.menuButtonTag :menuButtonDefalutTag;
 
     __weak typeof(self)weakSelf = self;
     void (^complete)(void) = ^(void){
-        CALayer *layer = weakSelf.bgLayers[weakSelf.lastSelectedIndex-100];
+        CALayer *layer = weakSelf.bgLayers[weakSelf.lastSelectedIndex-tempTag];
         layer.transform = CATransform3DMakeRotation(M_PI*2, 0, 0, 1);
         UIButton *btn = (id)[weakSelf viewWithTag:weakSelf.lastSelectedIndex];
         weakSelf.firstTableViewShow = NO;
@@ -560,7 +585,7 @@
             [btn setTitle:weakSelf.dataSourceSecond[indexPath.row] forState:UIControlStateNormal];
             if (_delegate && [_delegate respondsToSelector:@selector(menuCellDidSelected:firstIndex:andSecondIndex:)]) {
                 
-                [_delegate menuCellDidSelected:weakSelf.lastSelectedIndex-100 firstIndex:weakSelf.lastSelectedCellIndex andSecondIndex:indexPath.row];
+                [_delegate menuCellDidSelected:weakSelf.lastSelectedIndex-tempTag firstIndex:weakSelf.lastSelectedCellIndex andSecondIndex:indexPath.row];
                 
             }
             if (_delegate && [_delegate respondsToSelector:@selector(menuCellDidSelected:firstContent:andSecondContent:)]) {
@@ -569,32 +594,32 @@
                               andSecondContent:weakSelf.dataSourceSecond[indexPath.row]];
             }
             if (_delegate && [_delegate respondsToSelector:@selector(menuCellDidSelected:firstIndex:secondIndex:thirdIndex:)]) {
-                [_delegate menuCellDidSelected:weakSelf.lastSelectedIndex-100 firstIndex:weakSelf.lastSelectedCellIndex secondIndex:indexPath.row thirdIndex:-1];
+                [_delegate menuCellDidSelected:weakSelf.lastSelectedIndex-tempTag firstIndex:weakSelf.lastSelectedCellIndex secondIndex:indexPath.row thirdIndex:-1];
             }
             if (_delegate && [_delegate respondsToSelector:@selector(menuCellDidSelected:firstContent:secondContent:thirdContent:)]) {
                 [_delegate menuCellDidSelected:weakSelf.dataSourceSecond[indexPath.row] firstContent:weakSelf.dataSourceFirst[weakSelf.lastSelectedCellIndex] secondContent:weakSelf.dataSourceSecond[indexPath.row] thirdContent:nil];
             }
             if (_delegate && [_delegate respondsToSelector:@selector(menuCellDidSelected:menuIndex:firstContent:firstIndex:secondContent:secondIndex:thirdContent:thirdIndex:)]) {
-                [_delegate menuCellDidSelected:weakSelf.dataSourceSecond[indexPath.row] menuIndex:weakSelf.lastSelectedIndex-100 firstContent:weakSelf.dataSourceFirst[weakSelf.lastSelectedCellIndex] firstIndex:weakSelf.lastSelectedCellIndex secondContent:weakSelf.dataSourceSecond[indexPath.row] secondIndex:indexPath.row thirdContent:nil thirdIndex:-1];
+                [_delegate menuCellDidSelected:weakSelf.dataSourceSecond[indexPath.row] menuIndex:weakSelf.lastSelectedIndex-tempTag firstContent:weakSelf.dataSourceFirst[weakSelf.lastSelectedCellIndex] firstIndex:weakSelf.lastSelectedCellIndex secondContent:weakSelf.dataSourceSecond[indexPath.row] secondIndex:indexPath.row thirdContent:nil thirdIndex:-1];
             }
             
         }
         if (!weakSelf.dataSourceSecond && !weakSelf.dataSourceThird) {
             [btn setTitle:weakSelf.dataSourceFirst[indexPath.row] forState:UIControlStateNormal];
             if (_delegate && [_delegate respondsToSelector:@selector(menuCellDidSelected:firstIndex:andSecondIndex:)]) {
-                [_delegate menuCellDidSelected:weakSelf.lastSelectedIndex-100 firstIndex:indexPath.row andSecondIndex:-1];
+                [_delegate menuCellDidSelected:weakSelf.lastSelectedIndex-tempTag firstIndex:indexPath.row andSecondIndex:-1];
             }
             if (_delegate && [_delegate respondsToSelector:@selector(menuCellDidSelected:firstContent:andSecondContent:)]) {
                 [_delegate menuCellDidSelected:weakSelf.dataSourceFirst[indexPath.row] firstContent:weakSelf.dataSourceFirst[indexPath.row] andSecondContent:nil];
             }
             if (_delegate && [_delegate respondsToSelector:@selector(menuCellDidSelected:firstIndex:secondIndex:thirdIndex:)]) {
-                [_delegate menuCellDidSelected:weakSelf.lastSelectedIndex-100 firstIndex:indexPath.row secondIndex:-1 thirdIndex:-1];
+                [_delegate menuCellDidSelected:weakSelf.lastSelectedIndex-tempTag firstIndex:indexPath.row secondIndex:-1 thirdIndex:-1];
             }
             if (_delegate && [_delegate respondsToSelector:@selector(menuCellDidSelected:firstContent:secondContent:thirdContent:)]) {
                 [_delegate menuCellDidSelected:weakSelf.dataSourceFirst[indexPath.row] firstContent:weakSelf.dataSourceFirst[indexPath.row] secondContent:nil thirdContent:nil];
             }
             if (_delegate && [_delegate respondsToSelector:@selector(menuCellDidSelected:menuIndex:firstContent:firstIndex:secondContent:secondIndex:thirdContent:thirdIndex:)]) {
-                [_delegate menuCellDidSelected:weakSelf.dataSourceFirst[indexPath.row] menuIndex:weakSelf.lastSelectedIndex-100 firstContent:weakSelf.dataSourceFirst[indexPath.row] firstIndex:indexPath.row secondContent:nil secondIndex:-1 thirdContent:nil thirdIndex:-1];
+                [_delegate menuCellDidSelected:weakSelf.dataSourceFirst[indexPath.row] menuIndex:weakSelf.lastSelectedIndex-tempTag firstContent:weakSelf.dataSourceFirst[indexPath.row] firstIndex:indexPath.row secondContent:nil secondIndex:-1 thirdContent:nil thirdIndex:-1];
             }
             
         }
@@ -602,7 +627,7 @@
             [btn setTitle:weakSelf.dataSourceThird[indexPath.row] forState:UIControlStateNormal];
             if (_delegate && [_delegate respondsToSelector:@selector(menuCellDidSelected:firstIndex:andSecondIndex:)]) {
                 
-                [_delegate menuCellDidSelected:weakSelf.lastSelectedIndex-100 firstIndex:weakSelf.lastSelectedCellIndex andSecondIndex:weakSelf.lastSecondCellIndex];
+                [_delegate menuCellDidSelected:weakSelf.lastSelectedIndex-tempTag firstIndex:weakSelf.lastSelectedCellIndex andSecondIndex:weakSelf.lastSecondCellIndex];
                 
             }
             if (_delegate && [_delegate respondsToSelector:@selector(menuCellDidSelected:firstContent:andSecondContent:)]) {
@@ -611,13 +636,13 @@
                               andSecondContent:weakSelf.dataSourceSecond[weakSelf.lastSecondCellIndex]];
             }
             if (_delegate && [_delegate respondsToSelector:@selector(menuCellDidSelected:firstIndex:secondIndex:thirdIndex:)]) {
-                [_delegate menuCellDidSelected:weakSelf.lastSelectedIndex-100 firstIndex:weakSelf.lastSelectedCellIndex secondIndex:weakSelf.lastSecondCellIndex thirdIndex:indexPath.row];
+                [_delegate menuCellDidSelected:weakSelf.lastSelectedIndex-tempTag firstIndex:weakSelf.lastSelectedCellIndex secondIndex:weakSelf.lastSecondCellIndex thirdIndex:indexPath.row];
             }
             if (_delegate && [_delegate respondsToSelector:@selector(menuCellDidSelected:firstContent:secondContent:thirdContent:)]) {
                 [_delegate menuCellDidSelected:weakSelf.dataSourceThird[indexPath.row] firstContent:weakSelf.dataSourceFirst[weakSelf.lastSelectedCellIndex] secondContent:weakSelf.dataSourceSecond[weakSelf.lastSecondCellIndex] thirdContent:weakSelf.dataSourceThird[indexPath.row]];
             }
             if (_delegate && [_delegate respondsToSelector:@selector(menuCellDidSelected:menuIndex:firstContent:firstIndex:secondContent:secondIndex:thirdContent:thirdIndex:)]) {
-                [_delegate menuCellDidSelected:weakSelf.dataSourceThird[indexPath.row] menuIndex:weakSelf.lastSelectedIndex-100 firstContent:weakSelf.dataSourceFirst[weakSelf.lastSelectedCellIndex] firstIndex:weakSelf.lastSelectedCellIndex secondContent:weakSelf.dataSourceSecond[weakSelf.lastSecondCellIndex] secondIndex:weakSelf.lastSecondCellIndex thirdContent:weakSelf.dataSourceThird[indexPath.row]thirdIndex:indexPath.row];
+                [_delegate menuCellDidSelected:weakSelf.dataSourceThird[indexPath.row] menuIndex:weakSelf.lastSelectedIndex-tempTag firstContent:weakSelf.dataSourceFirst[weakSelf.lastSelectedCellIndex] firstIndex:weakSelf.lastSelectedCellIndex secondContent:weakSelf.dataSourceSecond[weakSelf.lastSecondCellIndex] secondIndex:weakSelf.lastSecondCellIndex thirdContent:weakSelf.dataSourceThird[indexPath.row]thirdIndex:indexPath.row];
             }
         }
         weakSelf.allData = nil;
@@ -634,7 +659,7 @@
         if (self.isNet) {
             UIButton *btn = (UIButton *)[self viewWithTag:self.lastSelectedIndex];
             if (_delegate && [_delegate respondsToSelector:@selector(netMenuClickMenuIndex:menuTitle:FirstIndex:firstContent:)]) {
-                [_delegate netMenuClickMenuIndex:self.lastSelectedIndex-100 menuTitle:btn.titleLabel.text FirstIndex:i firstContent:self.dataSourceFirst[i]];
+                [_delegate netMenuClickMenuIndex:self.lastSelectedIndex-tempTag menuTitle:btn.titleLabel.text FirstIndex:i firstContent:self.dataSourceFirst[i]];
             }
         }else{
             weakSelf.dataSourceSecond = nil;
@@ -684,8 +709,8 @@
 #pragma mark -- net
 
 - (void)netHideTable{
-    
-    CALayer *layer = self.bgLayers[self.lastSelectedIndex-100];
+     NSInteger tempTag = self.menuButtonTag ? self.menuButtonTag :menuButtonDefalutTag;
+    CALayer *layer = self.bgLayers[self.lastSelectedIndex-tempTag];
     layer.transform = CATransform3DMakeRotation(M_PI*2, 0, 0, 1);
     self.firstTableViewShow = NO;
     [UIView animateWithDuration:self.hideAnimationTime animations:^{
@@ -736,6 +761,7 @@
 }
 
 - (void)netShowCommentTable{
+     NSInteger tempTag = self.menuButtonTag ? self.menuButtonTag :menuButtonDefalutTag;
     NSInteger index = self.lastSelectedIndex;
     CGFloat TableViewW = self.cellHeight*self.dataSourceFirst.count;
     CGFloat MaxHeigth = self.tableViewMaxHeight ? self.tableViewMaxHeight : tableViewMaxHeightDefalut;
@@ -747,7 +773,7 @@
     }
     if (self.firstTableViewShow == NO) {
         [self showCarverView];
-        CALayer *layer = self.bgLayers[index-100];
+        CALayer *layer = self.bgLayers[index-tempTag];
         layer.transform = CATransform3DMakeRotation(M_PI, 0, 0, 1);
         self.tableFirst.frame = CGRectMake(0, CGRectGetMaxY(self.backView.frame), self.tableViewWith, 0);
         [UIView animateWithDuration:self.caverAnimationTime animations:^{
@@ -755,7 +781,7 @@
         }completion:^(BOOL finished) {
         }];
     }else{
-        CALayer *layer = self.bgLayers[index-100];
+        CALayer *layer = self.bgLayers[index-tempTag];
         layer.transform = CATransform3DMakeRotation(M_PI*2, 0, 0, 1);
         self.firstTableViewShow = NO;
         self.tableFirst.frame = CGRectMake(0, CGRectGetMaxY(self.backView.frame), self.tableViewWith, TableViewW);
