@@ -477,6 +477,12 @@
     }
     return 0;
 }
+
+- (void)changeCellTextStatueColorWith:(UITableViewCell *)cell{
+    cell.textLabel.textColor = self.unSelectedColor ? self.unSelectedColor : [UIColor grayColor];
+    cell.textLabel.highlightedTextColor = self.selectedColor ? self.selectedColor : [UIColor blackColor];
+}
+
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
     if (tableView == self.tableFirst) {
         static NSString *cellID = @"cellFirst";
@@ -486,6 +492,7 @@
         }
         cell1.textLabel.text = self.dataSourceFirst[indexPath.row];
         cell1.textLabel.font = self.tableTitleFont ? [UIFont systemFontOfSize:self.tableTitleFont] : TableTitleDefalutFont;
+        
         if (!self.allData && !self.isNet) {
             cell1.selectionStyle = UITableViewCellSelectionStyleNone;
             cell1.accessoryType = UITableViewCellAccessoryNone;
@@ -493,7 +500,7 @@
             cell1.selectionStyle = UITableViewCellSelectionStyleGray;
             cell1.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
         }
-        
+        [self changeCellTextStatueColorWith:cell1];
         return cell1;
         
     }else if (tableView == self.tableSecond){
@@ -512,7 +519,9 @@
         }
         cell2.textLabel.text = self.dataSourceSecond[indexPath.row];
         cell2.textLabel.font = self.tableTitleFont ? [UIFont systemFontOfSize:self.tableTitleFont] : TableTitleDefalutFont;
+        [self changeCellTextStatueColorWith:cell2];
         return cell2;
+        
     }else if (tableView == self.tableThird){
         static NSString *cellIde = @"cellThird";
         UITableViewCell *cell3 = [tableView dequeueReusableCellWithIdentifier:cellIde];
@@ -522,6 +531,7 @@
         cell3.textLabel.text = self.dataSourceThird[indexPath.row];
         cell3.selectionStyle = UITableViewCellSelectionStyleNone;
         cell3.textLabel.font = self.tableTitleFont ? [UIFont systemFontOfSize:self.tableTitleFont] : TableTitleDefalutFont;
+        [self changeCellTextStatueColorWith:cell3];
         return cell3;
     }
     return nil;

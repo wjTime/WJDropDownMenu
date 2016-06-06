@@ -52,7 +52,7 @@ typedef enum:NSInteger{
 
 
 #pragma mark -- 属性设置
-/** 关闭遮盖功能 */
+/** 遮盖层颜色 */
 @property (nonatomic,strong)UIColor *CarverViewColor;
 
 /** 遮盖的动画时间 */
@@ -81,6 +81,12 @@ typedef enum:NSInteger{
 
 /** 自定义tag值防止和页面其他tag有冲突 */
 @property (nonatomic,assign)NSInteger menuButtonTag;
+
+/** 未选中字体的颜色 */
+@property (nonatomic,strong)UIColor *unSelectedColor;
+
+/** 选中字体的颜色 */
+@property (nonatomic,strong)UIColor *selectedColor;
 
 /** 设置代理 */
 @property (nonatomic,assign) id<WJMenuDelegate>delegate;
