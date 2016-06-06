@@ -518,7 +518,7 @@
         cell1.textLabel.font = self.tableTitleFont ? [UIFont systemFontOfSize:self.tableTitleFont] : TableTitleDefalutFont;
         
         if (!self.allData && !self.isNet) {
-            cell1.selectionStyle = UITableViewCellSelectionStyleNone;
+            //cell1.selectionStyle = UITableViewCellSelectionStyleNone;
             cell1.accessoryType = UITableViewCellAccessoryNone;
         }else{
             cell1.selectionStyle = UITableViewCellSelectionStyleGray;
@@ -535,7 +535,7 @@
             cell2 = [[UITableViewCell alloc]initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:cellIde];
         }
         if (!self.data) {
-            cell2.selectionStyle = UITableViewCellSelectionStyleNone;
+            //cell2.selectionStyle = UITableViewCellSelectionStyleNone;
             cell2.accessoryType = UITableViewCellAccessoryNone;
         }else{
             cell2.selectionStyle = UITableViewCellSelectionStyleGray;
@@ -553,7 +553,7 @@
             cell3 = [[UITableViewCell alloc]initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:cellIde];
         }
         cell3.textLabel.text = self.dataSourceThird[indexPath.row];
-        cell3.selectionStyle = UITableViewCellSelectionStyleNone;
+        //cell3.selectionStyle = UITableViewCellSelectionStyleNone;
         cell3.textLabel.font = self.tableTitleFont ? [UIFont systemFontOfSize:self.tableTitleFont] : TableTitleDefalutFont;
         [self changeCellTextStatueColorWith:cell3];
         return cell3;
