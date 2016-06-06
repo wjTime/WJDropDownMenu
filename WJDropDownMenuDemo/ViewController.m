@@ -41,8 +41,8 @@
     menu.tableViewMaxHeight = 200;             //  tableView的最大高度(超过此高度就可以滑动显示)
     menu.menuButtonTag = 100;                  //  menu定义了一个tag值如果与本页面的其他button的值有冲突重合可以自定义设置
     menu.CarverViewColor = [UIColor colorWithRed:0.5 green:0.5 blue:0.5 alpha:0.5];//设置遮罩层颜色
-    menu.selectedColor = [UIColor redColor];
-    menu.unSelectedColor = [UIColor grayColor];
+    menu.selectedColor = [UIColor redColor];   //  选中的字体颜色
+    menu.unSelectedColor = [UIColor grayColor];//  未选中的字体颜色
     
 #warning 此处有两种方法导入数据 1.第一种是直接导入菜单一级子菜单二级子菜单三级子菜单的所有数据  2.第二种是根据每次点击index的请求数据后返回下一菜单的数据时导入数据一级一级联动的网络请求数据所有的方法都是以net开头
     // 第一种方法一次性导入所有菜单数据
