@@ -1,7 +1,6 @@
 
-// 如有任何bug、不足、功能不全之处请在github不上找我，我会第一时间回复并修正
-// QQ微信:576527857
-// github:https://github.com/wjTime/WJDropDownMenu.git 实时更新中...
+// 如有任何bug、不足、功能不全之处请在github不上找我
+
 
 
 #define cell_h                      40
